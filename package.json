@@ -1,6 +1,6 @@
 {
   "name": "umi-plugin-router-plus",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "为 Umi 带来增强的路由体验。",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
