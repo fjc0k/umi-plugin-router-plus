@@ -17,10 +17,5 @@ jobs:
           node-version: ${{ matrix.node_version }}
       - run: yarn --ignore-engines
       - run: yarn build
-      - run: yarn test --forceExit
-        env:
-          CI: true
-          HEADLESS: false
-          PROGRESS: none
-          NODE_ENV: test
-          NODE_OPTIONS: --max_old_space_size=4096
+      - run: yarn test
+      - run: yarn codecov
