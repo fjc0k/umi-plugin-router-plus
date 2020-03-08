@@ -28,8 +28,8 @@
     "url": "https://github.com/fjc0k"
   },
   "scripts": {
-    "dev": "tsc -w",
-    "build": "tsc",
+    "dev": "rimraf lib && tsc -w",
+    "build": "rimraf lib && tsc",
     "test": "jest --coverage",
     "release": "npm run test && standard-version -a && npm run build && git push --follow-tags origin master && npm publish"
   },
@@ -45,7 +45,9 @@
   ],
   "jest": {
     "preset": "ts-jest",
-    "snapshotSerializers": ["jest-snapshot-serializer-function-name"],
+    "snapshotSerializers": [
+      "jest-snapshot-serializer-function-name"
+    ],
     "collectCoverageFrom": [
       "src/**/*.ts",
       "!src/**/*.test.ts",
@@ -73,6 +75,7 @@
     "jest": "^25.1.0",
     "jest-snapshot-serializer-function-name": "^1.1.0",
     "lint-staged": "^10.0.8",
+    "rimraf": "^3.0.2",
     "standard-version": "^7.1.0",
     "ts-jest": "^25.2.1",
     "typescript": "^3.8.3",
