@@ -1,4 +1,3 @@
-// import {debounce} from 'vtils'
 import {existsSync, readFileSync} from 'fs'
 import {flatRoutes, getNormalizedRouteName, getNormalizedRouteParams, walkRoutes} from './utils'
 import {IApi, IRoute} from 'umi'
@@ -40,8 +39,9 @@ export default function (api: IApi) {
     })
   }
 
-  const routesHandler: Parameters<IApi['onPatchRoutes']>[0]['fn'] = payload => {
-    const routes = flatRoutes(payload.routes)
+  api.onGenerateFiles(async () => {
+    // ==== exports.ts ====
+    const routes = flatRoutes(await api.getRoutes())
     const usedNames = new Map<INormalizedRoute['name'], IRoute['path']>()
     const normalizedRoutes: INormalizedRoute[] = routes.map(route => {
       const name = getNormalizedRouteName(route)
@@ -63,12 +63,8 @@ export default function (api: IApi) {
       path: `${PLUGIN_ID}/exports.ts`,
       content: makeExports(normalizedRoutes),
     })
-  }
 
-  // api.onPatchRoutes(debounce(routesHandler, 10))
-
-  api.onGenerateFiles(async () => {
-    routesHandler({routes: await api.getRoutes()})
+    // ==== types.ts ====
     // 发布版
     const typesDts = join(__dirname, 'types.d.ts')
     // 本地版
