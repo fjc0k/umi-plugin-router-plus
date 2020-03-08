@@ -10,6 +10,7 @@ export interface INormalizedParam extends Key {
 export interface INormalizedRoute extends IRoute {
   name: string,
   params: INormalizedParam[],
+  paramsIsOptional: boolean,
   paramsTypeName: string,
 }
 

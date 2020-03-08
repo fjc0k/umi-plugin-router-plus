@@ -51,11 +51,13 @@ export default function (api: IApi) {
         usedNames.set(name, route.path)
       }
       const params = getNormalizedRouteParams(route)
+      const paramsIsOptional = params.every(param => param.optional)
       const paramsTypeName = `I${name}Params`
       return {
         ...route,
         name: name,
         params: params,
+        paramsIsOptional: paramsIsOptional,
         paramsTypeName: paramsTypeName,
       }
     })

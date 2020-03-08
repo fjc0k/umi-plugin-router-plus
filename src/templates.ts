@@ -95,12 +95,18 @@ export function makeExports(normalizedRoutes: INormalizedRoute[]): string {
       return normalizedParams
     }
 
-    export function navigateTo<TPageName extends IPageName>(name: TPageName, params?: IPageParams[TPageName]) {
-      history.push(toPath[name](toOriginalParams(name, params)))
+    interface IPageParamsOptional extends Record<IPageName, boolean> {
+      ${normalizedRoutes.map(route => dedent`
+        ${route.name}: ${route.paramsIsOptional},
+      `).join('\n')}
     }
 
-    export function redirectTo<TPageName extends IPageName>(name: TPageName, params?: IPageParams[TPageName]) {
-      history.replace(toPath[name](toOriginalParams(name, params)))
+    export function navigateTo<TPageName extends IPageName>(name: TPageName, ...params: IPageParamsOptional[TPageName] extends true ? [] : [IPageParams[TPageName]]) {
+      history.push(toPath[name](toOriginalParams(name, params[0])))
+    }
+
+    export function redirectTo<TPageName extends IPageName>(name: TPageName, ...params: IPageParamsOptional[TPageName] extends true ? [] : [IPageParams[TPageName]]) {
+      history.replace(toPath[name](toOriginalParams(name, params[0])))
     }
 
     export function navigateBack(delta: number = 1) {
