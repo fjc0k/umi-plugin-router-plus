@@ -1,0 +1,466 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`flatRoutes 表现正常: 一级路由表 1`] = `
+Array [
+  Object {
+    "path": "1",
+    "routes": Array [
+      Object {
+        "path": "1.1",
+        "routes": Array [],
+      },
+      Object {
+        "path": "1.2",
+        "routes": Array [
+          Object {
+            "path": "1.2.1",
+          },
+        ],
+      },
+    ],
+  },
+  Object {
+    "path": "1.1",
+    "routes": Array [],
+  },
+  Object {
+    "path": "1.2",
+    "routes": Array [
+      Object {
+        "path": "1.2.1",
+      },
+    ],
+  },
+  Object {
+    "path": "1.2.1",
+  },
+  Object {
+    "path": "2",
+  },
+  Object {
+    "path": "3",
+    "routes": Array [],
+  },
+  Object {
+    "path": "4",
+    "routes": Array [
+      Object {
+        "path": "4.1",
+        "routes": Array [
+          Object {
+            "path": "4.1.1",
+            "routes": Array [
+              Object {
+                "path": "4.1.1.1",
+                "routes": Array [
+                  Object {
+                    "path": "4.1.1.1.1",
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+  Object {
+    "path": "4.1",
+    "routes": Array [
+      Object {
+        "path": "4.1.1",
+        "routes": Array [
+          Object {
+            "path": "4.1.1.1",
+            "routes": Array [
+              Object {
+                "path": "4.1.1.1.1",
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+  Object {
+    "path": "4.1.1",
+    "routes": Array [
+      Object {
+        "path": "4.1.1.1",
+        "routes": Array [
+          Object {
+            "path": "4.1.1.1.1",
+          },
+        ],
+      },
+    ],
+  },
+  Object {
+    "path": "4.1.1.1",
+    "routes": Array [
+      Object {
+        "path": "4.1.1.1.1",
+      },
+    ],
+  },
+  Object {
+    "path": "4.1.1.1.1",
+  },
+]
+`;
+
+exports[`getNormalizedRouteParams 表现正常: path 为空 1`] = `Array []`;
+
+exports[`getNormalizedRouteParams 表现正常: 一个复杂的综合案例 1`] = `
+Array [
+  Object {
+    "asterisk": false,
+    "delimiter": "/",
+    "jsType": [Function Number],
+    "name": "id",
+    "optional": false,
+    "originalName": "id",
+    "partial": false,
+    "pattern": "\\\\d+",
+    "prefix": "/",
+    "repeat": false,
+    "tsType": "number",
+  },
+  Object {
+    "asterisk": false,
+    "delimiter": "/",
+    "jsType": [Function Number],
+    "name": "pid",
+    "optional": false,
+    "originalName": "pid",
+    "partial": false,
+    "pattern": "[0-9]+",
+    "prefix": "/",
+    "repeat": false,
+    "tsType": "number",
+  },
+  Object {
+    "asterisk": false,
+    "delimiter": "/",
+    "jsType": [Function Number],
+    "name": "type",
+    "optional": false,
+    "originalName": "type",
+    "partial": false,
+    "pattern": "1|2",
+    "prefix": "",
+    "repeat": false,
+    "tsType": "1 | 2",
+  },
+  Object {
+    "asterisk": false,
+    "delimiter": "/",
+    "jsType": [Function String],
+    "name": "name",
+    "optional": false,
+    "originalName": "name__s",
+    "partial": false,
+    "pattern": "[^\\\\/]+?",
+    "prefix": "",
+    "repeat": false,
+    "tsType": "string",
+  },
+  Object {
+    "asterisk": false,
+    "delimiter": "/",
+    "jsType": [Function String],
+    "name": "gender",
+    "optional": false,
+    "originalName": "gender__f_m",
+    "partial": false,
+    "pattern": "[^\\\\/]+?",
+    "prefix": "/",
+    "repeat": false,
+    "tsType": "'f' | 'm'",
+  },
+  Object {
+    "asterisk": false,
+    "delimiter": "/",
+    "jsType": [Function Boolean],
+    "name": "is_18",
+    "optional": true,
+    "originalName": "is_18__b",
+    "partial": false,
+    "pattern": "[^\\\\/]+?",
+    "prefix": "/",
+    "repeat": false,
+    "tsType": "boolean",
+  },
+  Object {
+    "asterisk": false,
+    "delimiter": "/",
+    "jsType": [Function String],
+    "name": "prop",
+    "optional": false,
+    "originalName": "prop",
+    "partial": false,
+    "pattern": "x|y|0",
+    "prefix": "/",
+    "repeat": false,
+    "tsType": "\\"x\\" | \\"y\\" | \\"0\\"",
+  },
+]
+`;
+
+exports[`getNormalizedRouteParams 表现正常: 一个指定类型为字符串的参数 1`] = `
+Array [
+  Object {
+    "asterisk": false,
+    "delimiter": "/",
+    "jsType": [Function String],
+    "name": "sss",
+    "optional": false,
+    "originalName": "sss__s",
+    "partial": false,
+    "pattern": "[^\\\\/]+?",
+    "prefix": "/",
+    "repeat": false,
+    "tsType": "string",
+  },
+]
+`;
+
+exports[`getNormalizedRouteParams 表现正常: 一个指定类型为布尔的参数 1`] = `
+Array [
+  Object {
+    "asterisk": false,
+    "delimiter": "/",
+    "jsType": [Function Boolean],
+    "name": "sss",
+    "optional": false,
+    "originalName": "sss__b",
+    "partial": false,
+    "pattern": "[^\\\\/]+?",
+    "prefix": "/",
+    "repeat": false,
+    "tsType": "boolean",
+  },
+]
+`;
+
+exports[`getNormalizedRouteParams 表现正常: 一个指定类型为数字且指定了枚举的参数 1`] = `
+Array [
+  Object {
+    "asterisk": false,
+    "delimiter": "/",
+    "jsType": [Function Number],
+    "name": "sss",
+    "optional": false,
+    "originalName": "sss__n__1_2_3",
+    "partial": false,
+    "pattern": "[^\\\\/]+?",
+    "prefix": "/",
+    "repeat": false,
+    "tsType": "1 | 2 | 3",
+  },
+]
+`;
+
+exports[`getNormalizedRouteParams 表现正常: 一个指定类型为数字的参数 1`] = `
+Array [
+  Object {
+    "asterisk": false,
+    "delimiter": "/",
+    "jsType": [Function Number],
+    "name": "sss",
+    "optional": false,
+    "originalName": "sss__n",
+    "partial": false,
+    "pattern": "[^\\\\/]+?",
+    "prefix": "/",
+    "repeat": false,
+    "tsType": "number",
+  },
+]
+`;
+
+exports[`getNormalizedRouteParams 表现正常: 一个指定类型为数字的可选参数 1`] = `
+Array [
+  Object {
+    "asterisk": false,
+    "delimiter": "/",
+    "jsType": [Function Number],
+    "name": "sss",
+    "optional": true,
+    "originalName": "sss__n",
+    "partial": false,
+    "pattern": "[^\\\\/]+?",
+    "prefix": "/",
+    "repeat": false,
+    "tsType": "number",
+  },
+]
+`;
+
+exports[`getNormalizedRouteParams 表现正常: 一个指定类型为数字的重复参数 1`] = `
+Array [
+  Object {
+    "asterisk": false,
+    "delimiter": "/",
+    "jsType": Array [
+      [Function Number],
+    ],
+    "name": "sss",
+    "optional": false,
+    "originalName": "sss__n",
+    "partial": false,
+    "pattern": "[^\\\\/]+?",
+    "prefix": "/",
+    "repeat": true,
+    "tsType": "number | Array<number>",
+  },
+]
+`;
+
+exports[`getNormalizedRouteParams 表现正常: 一个没有指定类型但指定了枚举的参数 1`] = `
+Array [
+  Object {
+    "asterisk": false,
+    "delimiter": "/",
+    "jsType": [Function String],
+    "name": "sss",
+    "optional": false,
+    "originalName": "sss__1_2_3",
+    "partial": false,
+    "pattern": "[^\\\\/]+?",
+    "prefix": "/",
+    "repeat": false,
+    "tsType": "'1' | '2' | '3'",
+  },
+]
+`;
+
+exports[`getNormalizedRouteParams 表现正常: 一个没有指定类型的参数 1`] = `
+Array [
+  Object {
+    "asterisk": false,
+    "delimiter": "/",
+    "jsType": [Function String],
+    "name": "sss",
+    "optional": false,
+    "originalName": "sss",
+    "partial": false,
+    "pattern": "[^\\\\/]+?",
+    "prefix": "/",
+    "repeat": false,
+    "tsType": "string",
+  },
+]
+`;
+
+exports[`getNormalizedRouteParams 表现正常: 一个没有指定类型的可选参数 1`] = `
+Array [
+  Object {
+    "asterisk": false,
+    "delimiter": "/",
+    "jsType": [Function String],
+    "name": "sss",
+    "optional": true,
+    "originalName": "sss",
+    "partial": false,
+    "pattern": "[^\\\\/]+?",
+    "prefix": "/",
+    "repeat": false,
+    "tsType": "string",
+  },
+]
+`;
+
+exports[`getNormalizedRouteParams 表现正常: 一个没有指定类型的重复参数 1`] = `
+Array [
+  Object {
+    "asterisk": false,
+    "delimiter": "/",
+    "jsType": Array [
+      [Function String],
+    ],
+    "name": "sss",
+    "optional": false,
+    "originalName": "sss",
+    "partial": false,
+    "pattern": "[^\\\\/]+?",
+    "prefix": "/",
+    "repeat": true,
+    "tsType": "string | Array<string>",
+  },
+]
+`;
+
+exports[`getNormalizedRouteParams 表现正常: 一个通过正则指定类型为数字的参数 1`] = `
+Array [
+  Object {
+    "asterisk": false,
+    "delimiter": "/",
+    "jsType": [Function Number],
+    "name": "sss",
+    "optional": false,
+    "originalName": "sss",
+    "partial": false,
+    "pattern": "\\\\d+",
+    "prefix": "/",
+    "repeat": false,
+    "tsType": "number",
+  },
+]
+`;
+
+exports[`getNormalizedRouteParams 表现正常: 没有 path 1`] = `Array []`;
+
+exports[`getNormalizedRouteParams 表现正常: 没有参数 1`] = `Array []`;
+
+exports[`walkRoutes 表现正常: 遍历路由表 1`] = `
+Array [
+  Object {
+    "path": "1_ok",
+    "routes": Array [
+      Object {
+        "path": "1.1_ok",
+        "routes": Array [],
+      },
+      Object {
+        "path": "1.2_ok",
+        "routes": Array [
+          Object {
+            "path": "1.2.1_ok",
+          },
+        ],
+      },
+    ],
+  },
+  Object {
+    "path": "2_ok",
+  },
+  Object {
+    "path": "3_ok",
+    "routes": Array [],
+  },
+  Object {
+    "path": "4_ok",
+    "routes": Array [
+      Object {
+        "path": "4.1_ok",
+        "routes": Array [
+          Object {
+            "path": "4.1.1_ok",
+            "routes": Array [
+              Object {
+                "path": "4.1.1.1_ok",
+                "routes": Array [
+                  Object {
+                    "path": "4.1.1.1.1_ok",
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+]
+`;

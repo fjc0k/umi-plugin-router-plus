@@ -1,0 +1,27 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "target": "ES6",
+    "module": "CommonJS",
+    "moduleResolution": "node",
+    "declaration": true,
+    "removeComments": false,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "newLine": "LF",
+    "skipLibCheck": true,
+    "sourceMap": false,
+    "baseUrl": ".",
+    "outDir": "./lib",
+    "lib": [
+      "esnext"
+    ]
+  },
+  "include": [
+    "src/**/*.ts"
+  ],
+  "exclude": [
+    "**/*.test.ts",
+    "**/__*__"
+  ]
+}
