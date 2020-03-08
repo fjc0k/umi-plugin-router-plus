@@ -1,7 +1,7 @@
 {
   "name": "umi-plugin-router-plus",
   "version": "0.0.0",
-  "description": "小巧实用的 JavaScript 工具类库。",
+  "description": "为 Umi 带来增强的路由体验。",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "homepage": "https://github.com/fjc0k/umi-plugin-router-plus",
