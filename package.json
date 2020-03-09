@@ -28,7 +28,7 @@
     "url": "https://github.com/fjc0k"
   },
   "scripts": {
-    "dev": "npm run build && concurrently -n tsc,example 'tsc -w' 'cross-env APP_ROOT=./example umi dev'",
+    "dev": "rimraf lib && tsc-watch --onSuccess 'cross-env APP_ROOT=./example umi dev'",
     "build": "rimraf lib && tsc",
     "test": "jest --coverage",
     "release": "npm run test && standard-version -a && npm run build && git push --follow-tags origin master && npm publish"
@@ -70,7 +70,6 @@
     "@types/jest": "^25.1.4",
     "@umijs/preset-react": "^1.3.10",
     "codecov": "^3.6.5",
-    "concurrently": "^5.1.0",
     "cross-env": "^7.0.2",
     "eslint": "^6.8.0",
     "eslint-config-io": "^0.8.3",
@@ -81,6 +80,7 @@
     "rimraf": "^3.0.2",
     "standard-version": "^7.1.0",
     "ts-jest": "^25.2.1",
+    "tsc-watch": "^4.2.3",
     "typescript": "^3.8.3",
     "umi": "^3.0.5"
   },
