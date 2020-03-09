@@ -1,5 +1,11 @@
 {
   "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "paths": {
+      "@/*": ["./example/src/*"],
+      "@@/*": ["./example/src/.umi/*"]
+    }
+  },
   "include": ["**/*"],
   "exclude": []
 }

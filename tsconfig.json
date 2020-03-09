@@ -17,11 +17,7 @@
     "outDir": "./lib",
     "lib": [
       "esnext"
-    ],
-    "paths": {
-      "@/*": ["./example/src/*"],
-      "@@/*": ["./example/src/.umi/*"]
-    }
+    ]
   },
   "include": [
     "src/**/*.ts"

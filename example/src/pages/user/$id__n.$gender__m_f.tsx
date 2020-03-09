@@ -1,7 +1,7 @@
 import React from 'react'
 import {usePageParams} from 'umi'
 
-export default function () {
+export default function User() {
   const {id, gender} = usePageParams('User')
 
   return (
