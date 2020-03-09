@@ -1,21 +1,27 @@
 {
   "compilerOptions": {
     "strict": true,
-    "target": "ES6",
+    "target": "ES5",
     "module": "CommonJS",
     "moduleResolution": "node",
     "declaration": true,
     "removeComments": false,
     "esModuleInterop": true,
+    "importHelpers": true,
     "allowSyntheticDefaultImports": true,
     "newLine": "LF",
+    "jsx": "react",
     "skipLibCheck": true,
     "sourceMap": false,
     "baseUrl": ".",
     "outDir": "./lib",
     "lib": [
       "esnext"
-    ]
+    ],
+    "paths": {
+      "@/*": ["./example/src/*"],
+      "@@/*": ["./example/src/.umi/*"]
+    }
   },
   "include": [
     "src/**/*.ts"
