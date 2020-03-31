@@ -5,11 +5,15 @@ export function makeExports(syntheticRoutes: ISyntheticRoute[]): string {
   return dedent`
     import { useMemo } from 'react'
     import { history, useLocation } from 'umi'
-    import { parseQuery, IfAny, IfNever, RequiredKeys } from './runtime'
+
+    // ==== 辅助类型 ====
+    type IfAny<T, Y, N> = 0 extends (1 & T) ? Y : N
+    type IfNever<T, Y, N> = [T] extends [never] ? Y : N
+    type RequiredKeys<T> = { [K in keyof T]-?: {} extends Pick<T, K> ? never : K }[keyof T]
 
 
     // ==== 页面名称 ====
-    export type IPageName = ${
+    type IPageName = ${
       syntheticRoutes
         .map(route => `'${route.names.page}'`)
         .join(' | ')
@@ -20,11 +24,11 @@ export function makeExports(syntheticRoutes: ISyntheticRoute[]): string {
     ${syntheticRoutes.filter(route => !!route.component).map(route => dedent`
       // @ts-ignore
       import { Query as ${route.names.QueryTypes} } from ${JSON.stringify(route.component)}
-    `).join('\n\n')}
+    `).join('\n')}
 
 
     // ==== 页面名称 -> 页面查询 ====
-    export interface IPageNameToQueryTypes {
+    interface IPageNameToQueryTypes {
       ${syntheticRoutes.map(route => dedent`
         ${route.names.page}: ${route.names.QueryTypes},
       `).join('\n')}
@@ -32,7 +36,7 @@ export function makeExports(syntheticRoutes: ISyntheticRoute[]): string {
 
 
     // ==== 页面名称 -> 页面路径 ====
-    export const pageNameToPath = {
+    const pageNameToPath = {
       ${syntheticRoutes.map(route => dedent`
         ${route.names.page}: ${JSON.stringify(route.path)},
       `).join('\n')}
@@ -55,7 +59,9 @@ export function makeExports(syntheticRoutes: ISyntheticRoute[]): string {
       // @ts-ignore
       history.push({
         pathname: pageNameToPath[pageName],
-        query: query[0],
+        query: {
+          __query__: JSON.stringify(query[0]),
+        },
       })
     }
 
@@ -74,7 +80,9 @@ export function makeExports(syntheticRoutes: ISyntheticRoute[]): string {
       // @ts-ignore
       history.replace({
         pathname: pageNameToPath[pageName],
-        query: query[0],
+        query: {
+          __query__: JSON.stringify(query[0]),
+        },
       })
     }
 
@@ -90,8 +98,16 @@ export function makeExports(syntheticRoutes: ISyntheticRoute[]): string {
       // @ts-ignore
       const { query } = useLocation()
       const parsedQuery = useMemo(
-        () => parseQuery(query),
-        [query],
+        () => {
+          try {
+            return query.__query__
+              ? JSON.parse(query.__query__)
+              : {}
+          } catch (err) {
+            return {}
+          }
+        },
+        [query.__query__],
       )
       return parsedQuery
     }

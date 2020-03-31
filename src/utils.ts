@@ -25,7 +25,7 @@ export function flatRoutes(routes: IRoute[]): IRoute[] {
  * @param route 路由信息
  */
 export function getRouteName(route: IRoute): string {
-  const originalName = (route.path || '').replace(/\.html$/i, '')
+  const originalName = (route.path || /* istanbul ignore next */ '').replace(/\.html?$/i, '')
   const baseName = utils.lodash.upperFirst(utils.lodash.camelCase(originalName)) || 'Index'
   const suffix = utils.lodash.isEmpty(route.routes) ? '' : 'Layout'
   const routeName = `${baseName}${suffix}`
