@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.1.0](https://github.com/fjc0k/umi-plugin-router-plus/compare/v1.0.0...v1.1.0) (2020-03-31)
+
+
+### Features
+
+* 支持继承 layout 的参数 ([f28badf](https://github.com/fjc0k/umi-plugin-router-plus/commit/f28badf7a971383ebba84e16198bd5968dc1a892))
+
 ## [1.0.0](https://github.com/fjc0k/umi-plugin-router-plus/compare/v0.0.1...v1.0.0) (2020-03-31)
 
 
