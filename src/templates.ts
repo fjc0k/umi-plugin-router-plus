@@ -7,7 +7,20 @@ export function makeExports(normalizedRoutes: INormalizedRoute[]): string {
     import { history, useParams } from 'umi'
     import { compile, PathFunction } from 'path-to-regexp'
     import { INormalizedParam } from './types'
+    import { ExtractExternalQueryType, ExtractInternalQueryType, Merge } from './runtime'
 
+    export { QueryTypes, queryTypes } from './runtime'
+
+
+    // ==== 页面名称 ====
+    export type IPageName = ${
+      normalizedRoutes
+        .map(route => `'${route.name}'`)
+        .join(' | ')
+    }
+
+
+    // ==== 页面参数 ====
     ${normalizedRoutes.map(route => dedent`
       export interface ${route.paramsTypeName} {
         ${route.params.map(param => dedent`
@@ -16,13 +29,56 @@ export function makeExports(normalizedRoutes: INormalizedRoute[]): string {
       }
     `).join('\n\n')}
 
-    export type IPageName = ${normalizedRoutes.map(route => `'${route.name}'`).join(' | ')}
 
+    // ==== 页面查询 ====
+    ${normalizedRoutes.filter(route => !!route.component).map(route => dedent`
+      // @ts-ignore
+      import { pageQueryTypes as ${route.name}PageQueryTypes } from ${JSON.stringify(route.component)}
+      export type I${route.name}ExternalQuery = ExtractExternalQueryType<typeof ${route.name}PageQueryTypes>
+      export type I${route.name}InternalQuery = ExtractInternalQueryType<typeof ${route.name}PageQueryTypes>
+    `).join('\n\n')}
+
+
+    // ==== 页面输入 ====
+    ${normalizedRoutes.map(route => dedent`
+      export type I${route.name}ExternalInput = Merge<I${route.name}ExternalQuery, ${route.paramsTypeName}>
+      export type I${route.name}InternalInput = Merge<I${route.name}InternalQuery, ${route.paramsTypeName}>
+    `).join('\n\n')}
+
+
+    // ==== 页面名称 -> 页面参数 ====
     export interface IPageParams {
       ${normalizedRoutes.map(route => dedent`
         ${route.name}: ${route.paramsTypeName}
       `).join('\n')}
     }
+
+
+    // ==== 页面名称 -> 页面查询 ====
+    export interface IPageExternalQuery {
+      ${normalizedRoutes.map(route => dedent`
+        ${route.name}: I${route.name}ExternalQuery
+      `).join('\n')}
+    }
+    export interface IPageInternalQuery {
+      ${normalizedRoutes.map(route => dedent`
+        ${route.name}: I${route.name}InternalQuery
+      `).join('\n')}
+    }
+
+
+    // ==== 页面名称 -> 页面输入 ====
+    export interface IPageExternalInput {
+      ${normalizedRoutes.map(route => dedent`
+        ${route.name}: I${route.name}ExternalInput
+      `).join('\n')}
+    }
+    export interface IPageInternalInput {
+      ${normalizedRoutes.map(route => dedent`
+        ${route.name}: I${route.name}InternalInput
+      `).join('\n')}
+    }
+
 
     const toPath: Record<IPageName, PathFunction> = {
       ${normalizedRoutes.map(route => dedent`
@@ -118,6 +174,15 @@ export function makeExports(normalizedRoutes: INormalizedRoute[]): string {
     }
 
     export function usePageParams<TPageName extends IPageName>(name: TPageName): IPageParams[TPageName] {
+      const params = useParams()
+      const normalizedParams = useMemo(
+        () => toNormalizedParams(name, params),
+        [name, params],
+      )
+      return normalizedParams
+    }
+
+    export function usePageQuery<TPageName extends IPageName>(name: TPageName): IPageInternalQuery[TPageName] {
       const params = useParams()
       const normalizedParams = useMemo(
         () => toNormalizedParams(name, params),

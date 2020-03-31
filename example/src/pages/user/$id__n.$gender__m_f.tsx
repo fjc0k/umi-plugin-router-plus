@@ -1,5 +1,5 @@
 import React from 'react'
-import {usePageParams} from 'umi'
+import {queryTypes, usePageParams} from 'umi'
 
 export default function User() {
   const {id, gender} = usePageParams('User')
@@ -11,4 +11,9 @@ export default function User() {
       {`gender is ${gender} <${typeof gender}>`}
     </div>
   )
+}
+
+export const pageQueryTypes = {
+  pid: queryTypes.number().enum([1, 2]),
+  opid: queryTypes.number().enum([1, 2]),
 }
