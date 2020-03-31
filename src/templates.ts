@@ -10,8 +10,13 @@ export function makeExports(syntheticRoutes: ISyntheticRoute[]): string {
     type IfAny<T, Y, N> = 0 extends (1 & T) ? Y : N
     type IfNever<T, Y, N> = [T] extends [never] ? Y : N
     type RequiredKeys<T> = { [K in keyof T]-?: {} extends Pick<T, K> ? never : K }[keyof T]
-    type Merge<M, N> = Omit<M, Extract<keyof M, keyof N>> & N
-
+    type Merge<M, N> = [M, N] extends [never, never]
+      ? never
+      : [M] extends [never]
+        ? N
+        : [N] extends [never]
+          ? M
+          : Omit<M, Extract<keyof M, keyof N>> & N
 
     // ==== 页面名称 ====
     type INormalPageName = ${
@@ -49,7 +54,7 @@ export function makeExports(syntheticRoutes: ISyntheticRoute[]): string {
         ${route.pageName}: ${
           !route.parentPageName
             ? `IPageNameToPageParams['${route.pageName}']`
-            : `Merge<IPageNameToPageFullParams['${route.parentPageName}'], IfNever<IPageNameToPageParams['${route.pageName}'], {}, IPageNameToPageParams['${route.pageName}']>>`
+            : `Merge<IPageNameToPageFullParams['${route.parentPageName}'], IPageNameToPageParams['${route.pageName}']>`
         },
       `).join('\n')}
     }
