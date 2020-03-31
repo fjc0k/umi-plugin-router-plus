@@ -1,10 +1,10 @@
+import { existsSync, readFileSync } from 'fs'
 import { flatRoutes, getRouteName } from './utils'
 import { IApi } from 'umi'
 import { ISyntheticRoute } from './types'
 import { join } from 'path'
 import { makeExports } from './templates'
 import { PLUGIN_ID, PLUGIN_KEY } from './consts'
-import { readFileSync } from 'fs'
 
 export default function (api: IApi) {
   api.describe({
@@ -38,16 +38,28 @@ export default function (api: IApi) {
     })
 
     // ==== runtime.ts ====
+    const runtimeTs = join(__dirname, 'runtime.ts')
     const runtimeJs = join(__dirname, 'runtime.js')
     const runtimeDts = join(__dirname, 'runtime.d.ts')
-    api.writeTmpFile({
-      path: `${PLUGIN_ID}/runtime.js`,
-      content: readFileSync(runtimeJs, 'utf8'),
-    })
-    api.writeTmpFile({
-      path: `${PLUGIN_ID}/runtime.d.ts`,
-      content: readFileSync(runtimeDts, 'utf8'),
-    })
+    // 测试
+    if (existsSync(runtimeTs)) {
+      api.writeTmpFile({
+        path: `${PLUGIN_ID}/runtime.ts`,
+        content: readFileSync(runtimeTs, 'utf8'),
+      })
+    }
+    // 正式
+    /* istanbul ignore next */
+    else {
+      api.writeTmpFile({
+        path: `${PLUGIN_ID}/runtime.js`,
+        content: readFileSync(runtimeJs, 'utf8'),
+      })
+      api.writeTmpFile({
+        path: `${PLUGIN_ID}/runtime.d.ts`,
+        content: readFileSync(runtimeDts, 'utf8'),
+      })
+    }
   })
 
   api.addUmiExports(() => {

@@ -1,32 +1,23 @@
 # umi-plugin-router-plus ![Node CI](https://github.com/fjc0k/umi-plugin-router-plus/workflows/Node%20CI/badge.svg) [![codecov](https://codecov.io/gh/fjc0k/umi-plugin-router-plus/branch/master/graph/badge.svg)](https://codecov.io/gh/fjc0k/umi-plugin-router-plus)
 
-为 [Umi 3](https://github.com/umijs/umi) 带来增强的路由体验。
-
-该插件会根据项目的路由配置自动生成类型友好的样板代码，包括**路由跳转函数**、**页面参数获取 Hook**等，同时还支持**为路径参数添加类型定义**。
-
-![007RpWuggy1gcmugi86dlj30q60sowex](https://tva1.sinaimg.cn/mw690/007RpWuggy1gcmugi86dlj30q60sowex)
+一款 [Umi 3](https://github.com/umijs/umi) 插件，为你带来**类型友好**的**基于 query string** 的**页面参数的定义、传递与获取**。
 
 ----
 
 <!-- TOC depthFrom:2 -->
 
 - [安装](#安装)
-- [启用](#启用)
-- [配置](#配置)
-- [给参数加类型](#给参数加类型)
-  - [布尔(boolean)](#布尔boolean)
-  - [数字(number)](#数字number)
-  - [字符串(string)](#字符串string)
-  - [枚举(enum)](#枚举enum)
-- [类型友好的路由 API](#类型友好的路由-api)
-  - [navigateTo(pageName, pageParams)](#navigatetopagename-pageparams)
-  - [redirectTo(pageName, pageParams)](#redirecttopagename-pageparams)
-  - [navigateBack(delta)](#navigatebackdelta)
-  - [navigateForward(delta)](#navigateforwarddelta)
-  - [usePageParams(pageName)](#usepageparamspagename)
+- [启用方式](#启用方式)
+- [使用介绍](#使用介绍)
+  - [定义页面参数](#定义页面参数)
+  - [获取页面参数](#获取页面参数)
+- [API 列表](#api-列表)
+    - [navigateTo(pageName, query)](#navigatetopagename-query)
+    - [redirectTo(pageName, query)](#redirecttopagename-query)
+    - [navigateBack(delta)](#navigatebackdelta)
+    - [navigateForward(delta)](#navigateforwarddelta)
+    - [useQuery(pageName)](#usequerypagename)
 - [页面名称(pageName)如何定义](#页面名称pagename如何定义)
-  - [在约定式路由下](#在约定式路由下)
-  - [在配置式路由下](#在配置式路由下)
 - [许可](#许可)
 
 <!-- /TOC -->
@@ -41,78 +32,91 @@ yarn add umi-plugin-router-plus -D
 npm i umi-plugin-router-plus -D
 ```
 
-## 启用
+## 启用方式
 
-打开 Umi 的配置文件：
+默认开启。
 
-```ts
-import {defineConfig} from 'umi'
-import {defineConfig as defineRouterPlusConfig} from 'umi-plugin-router-plus'
+## 使用介绍
 
-export default defineConfig({
-  // ...其他配置...
-  ...defineRouterPlusConfig({
-    transformDollarSignToColonOnRoutePaths: true
-  })
-})
+### 定义页面参数
+
+在页面文件内定义 `Query` 类型，并将之导出即可：
+
+```tsx
+// src/pages/test.tsx
+
+export interface Query {
+  id: number,
+  enabled?: boolean,
+  gender: 'male' | 'female',
+  name: string,
+}
 ```
 
-## 配置
+### 获取页面参数
 
-- **transformDollarSignToColonOnRoutePaths**
-  - 类型: `boolean`
-  - 默认值: `false`
-  - 说明: 是否将路由路径上的 `$` 符号替换为 `:` 符号，开启后可以在约定式路由下定义多个参数，比如这是一个定义了多个参数的页面文件的名称：`$id.$type.$page.tsx`。
+在页面文件内定义好页面参数后，只需在页面组件内使用 `useQuery` 即可获取：
 
-## 给参数加类型
+```tsx
+// src/pages/test.tsx
+import React from 'react'
+import { useQuery } from 'umi'
 
-我们约定：**在参数名称后面加上双下划线(__)开启类型定义**。
+export interface Query {
+  id: number,
+  enabled?: boolean,
+  gender: 'male' | 'female',
+  name: string,
+}
 
-目前支持布尔(`boolean`)、数字(`number`)、字符串(`string`)以及枚举(`enum`)。
+export default function () {
+  const {
+    id,
+    enabled = false, // 指定默认值
+    gender,
+    name,
+  } = useQuery('Test')
 
-### 布尔(boolean)
+  return (
+    <div>id is: {id}</div>
+  )
+}
+```
 
-布尔类型用字符 `b` 表示，比如：`[isClose__b].tsx`，表示 `isClose` 是一个布尔类型的值。
+`useQuery` 会自动转换传入的页面参数值的类型：
 
-### 数字(number)
+- 参数值为字符串 `true`，则表示这是一个布尔值 `true`；
+- 参数值为字符串 `false`，则表示这是一个布尔值 `false`；
+- 参数值为数值字符串，则表示这是一个数字；
+- 参数值为其他字符串，则原样返回。
 
-数字类型用字符 `n` 表示，比如：`[id__n].tsx`，表示 `id` 是一个数字类型的值。
+因此，你应避免使用 `true`
 
-### 字符串(string)
+## API 列表
 
-字符串类型用字符 `s` 表示，它是默认类型，一般不必手动指定，比如：`[type__s].tsx`，表示 `type` 是一个字符串类型的值。
-
-### 枚举(enum)
-
-枚举使用单下划线(_)分割每一个值，比如：`[gender__female_male].tsx`，表示 `gender` 要么是 `female`、要么是 `male`。
-
-我们还可以将枚举和数字类型联合使用，比如：`[state__n__0_1_2_3]`，表示 `state` 是一个数字类型，但它的值只可能是 `0`、`1`、`2`、`3` 之一。
-
-## 类型友好的路由 API
-
-### navigateTo(pageName, pageParams)
+#### navigateTo(pageName, query)
 
 ```ts
 import { navigateTo } from 'umi'
 
 navigateTo('Index')
-navigateTo('User', {id: 2})
+navigateTo('User', { id: 2 })
 ```
 
 保留当前页面，跳转至某个页面，和 `history.push` 效果一致。
 
-### redirectTo(pageName, pageParams)
+#### redirectTo(pageName, query)
 
 ```ts
 import { redirectTo } from 'umi'
 
 redirectTo('Index')
-redirectTo('User', {id: 2})
+redirectTo('User', { id: 2 })
 ```
 
 关闭当前页面，跳转至某个页面，和 `history.replace` 效果一致。
 
-### navigateBack(delta)
+#### navigateBack(delta)
 
 ```ts
 import { navigateBack } from 'umi'
@@ -123,7 +127,7 @@ navigateBack(2)
 
 关闭当前页面，返回上一页面或多级页面，和 `history.goBack` 效果一致。
 
-### navigateForward(delta)
+#### navigateForward(delta)
 
 ```ts
 import { navigateForward } from 'umi'
@@ -134,12 +138,12 @@ navigateForward(2)
 
 保留当前页面，前进到下一页面或多级页面，和 `history.goForward` 效果一致。
 
-### usePageParams(pageName)
+#### useQuery(pageName)
 
 ```ts
-import { usePageParams } from 'umi'
+import { useQuery } from 'umi'
 
-const {id} = usePageParams('User')
+const { id } = useQuery('User')
 ```
 
 在页面组件中获取传入的参数值，和 `useParams` 效果一致，但类型提示更友好，参数值也会根据参数的类型定义格式化，拿来即用，无需转换。
@@ -148,36 +152,6 @@ const {id} = usePageParams('User')
 ## 页面名称(pageName)如何定义
 
 页面名称会根据路由的 `path` 自动生成，如果程序没有提示你页面名称重复，大可不必深究。
-
-你也可以手动定义页面名称，但必须保证其全局唯一：
-
-### 在约定式路由下
-
-你可以通过 Umi 提供的扩展路由属性定义页面名称：
-
-```tsx
-function User() {
-  return <h1>User</h1>
-}
-
-User.pageName = 'User'
-
-export default User
-```
-
-### 在配置式路由下
-
-你只需为路由指定 `name` 或 `pageName` 属性即可：
-
-```ts
-[
-  {
-    path: '/user/:id__n',
-    name: 'User', 
-    component: './user'
-  }
-]
-```
 
 ## 许可
 

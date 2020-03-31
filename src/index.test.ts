@@ -9,7 +9,7 @@ test('normal', async () => {
   const cwd = join(fixtures, 'normal')
   const service = new Service({
     cwd: cwd,
-    plugins: [require.resolve('../lib')],
+    plugins: [require.resolve('./')],
   })
   await service.run({
     name: 'g',
