@@ -5219,10 +5219,10 @@ escodegen@^1.11.1:
   optionalDependencies:
     source-map "~0.6.1"
 
-eslint-config-io@^0.8.4:
-  version "0.8.4"
-  resolved "https://registry.npm.taobao.org/eslint-config-io/download/eslint-config-io-0.8.4.tgz#a489adc75cdf00526bc488fab3b799fcf9abbfd9"
-  integrity sha1-pImtx1zfAFJrxIj6s7eZ/Pmrv9k=
+eslint-config-io@^0.8.7:
+  version "0.8.7"
+  resolved "https://registry.npm.taobao.org/eslint-config-io/download/eslint-config-io-0.8.7.tgz#fdf5274e222fb595eae642d403b36570e615cb92"
+  integrity sha1-/fUnTiIvtZXq5kLUA7NlcOYVy5I=
   dependencies:
     "@typescript-eslint/eslint-plugin" "^2.21.0"
     "@typescript-eslint/parser" "^2.21.0"

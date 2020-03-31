@@ -1,168 +1,81 @@
-import {dedent, isArray} from 'vtils'
-import {INormalizedRoute} from './types'
+import { dedent } from 'vtils'
+import { ISyntheticRoute } from './types'
 
-export function makeExports(normalizedRoutes: INormalizedRoute[]): string {
+export function makeExports(syntheticRoutes: ISyntheticRoute[]): string {
   return dedent`
     import { useMemo } from 'react'
-    import { history, useParams } from 'umi'
-    import { compile, PathFunction } from 'path-to-regexp'
-    import { INormalizedParam } from './types'
-    import { ExtractExternalQueryType, ExtractInternalQueryType, Merge } from './runtime'
-
-    export { QueryTypes, queryTypes } from './runtime'
+    import { history, useLocation } from 'umi'
+    import { parseQuery, IfAny, IfNever, RequiredKeys } from './runtime'
 
 
     // ==== 页面名称 ====
     export type IPageName = ${
-      normalizedRoutes
-        .map(route => `'${route.name}'`)
+      syntheticRoutes
+        .map(route => `'${route.names.page}'`)
         .join(' | ')
     }
 
 
-    // ==== 页面参数 ====
-    ${normalizedRoutes.map(route => dedent`
-      export interface ${route.paramsTypeName} {
-        ${route.params.map(param => dedent`
-          ${JSON.stringify(param.name)}${param.optional || param.asterisk ? '?' : ''}: ${param.tsType}
-        `).join('\n')}
-      }
-    `).join('\n\n')}
-
-
     // ==== 页面查询 ====
-    ${normalizedRoutes.filter(route => !!route.component).map(route => dedent`
+    ${syntheticRoutes.filter(route => !!route.component).map(route => dedent`
       // @ts-ignore
-      import { pageQueryTypes as ${route.name}PageQueryTypes } from ${JSON.stringify(route.component)}
-      export type I${route.name}ExternalQuery = ExtractExternalQueryType<typeof ${route.name}PageQueryTypes>
-      export type I${route.name}InternalQuery = ExtractInternalQueryType<typeof ${route.name}PageQueryTypes>
+      import { Query as ${route.names.QueryTypes} } from ${JSON.stringify(route.component)}
     `).join('\n\n')}
-
-
-    // ==== 页面输入 ====
-    ${normalizedRoutes.map(route => dedent`
-      export type I${route.name}ExternalInput = Merge<I${route.name}ExternalQuery, ${route.paramsTypeName}>
-      export type I${route.name}InternalInput = Merge<I${route.name}InternalQuery, ${route.paramsTypeName}>
-    `).join('\n\n')}
-
-
-    // ==== 页面名称 -> 页面参数 ====
-    export interface IPageParams {
-      ${normalizedRoutes.map(route => dedent`
-        ${route.name}: ${route.paramsTypeName}
-      `).join('\n')}
-    }
 
 
     // ==== 页面名称 -> 页面查询 ====
-    export interface IPageExternalQuery {
-      ${normalizedRoutes.map(route => dedent`
-        ${route.name}: I${route.name}ExternalQuery
-      `).join('\n')}
-    }
-    export interface IPageInternalQuery {
-      ${normalizedRoutes.map(route => dedent`
-        ${route.name}: I${route.name}InternalQuery
+    export interface IPageNameToQueryTypes {
+      ${syntheticRoutes.map(route => dedent`
+        ${route.names.page}: ${route.names.QueryTypes},
       `).join('\n')}
     }
 
 
-    // ==== 页面名称 -> 页面输入 ====
-    export interface IPageExternalInput {
-      ${normalizedRoutes.map(route => dedent`
-        ${route.name}: I${route.name}ExternalInput
-      `).join('\n')}
-    }
-    export interface IPageInternalInput {
-      ${normalizedRoutes.map(route => dedent`
-        ${route.name}: I${route.name}InternalInput
+    // ==== 页面名称 -> 页面路径 ====
+    export const pageNameToPath = {
+      ${syntheticRoutes.map(route => dedent`
+        ${route.names.page}: ${JSON.stringify(route.path)},
       `).join('\n')}
     }
 
 
-    const toPath: Record<IPageName, PathFunction> = {
-      ${normalizedRoutes.map(route => dedent`
-        ${route.name}: compile(${JSON.stringify(route.path)}),
-      `).join('\n')}
-    }
-
-    const originalParamsInfo: {
-      [TPageName in IPageName]: Record<
-        keyof IPageParams[TPageName],
-        Pick<INormalizedParam, 'originalName'>
+    // ==== 路由辅助函数 ====
+    export function navigateTo<TPageName extends IPageName>(
+      pageName: TPageName,
+      ...query: IfAny<
+        IPageNameToQueryTypes[TPageName],
+        [],
+        IfNever<
+          RequiredKeys<IPageNameToQueryTypes[TPageName]>,
+          [IPageNameToQueryTypes[TPageName]?],
+          [IPageNameToQueryTypes[TPageName]]
+        >
       >
-    } = {
-      ${normalizedRoutes.map(route => dedent`
-        ${route.name}: {
-          ${route.params.map(param => dedent`
-            ${JSON.stringify(param.name)}: {
-              originalName: ${JSON.stringify(param.originalName)},
-            },
-          `).join('\n')}
-        },
-      `).join('\n')}
+    ) {
+      // @ts-ignore
+      history.push({
+        pathname: pageNameToPath[pageName],
+        query: query[0],
+      })
     }
 
-    const normalizedParamsInfo: {
-      [TPageName in IPageName]: Record<
-        string,
-        Pick<INormalizedParam, 'name' | 'jsType'>
+    export function redirectTo<TPageName extends IPageName>(
+      pageName: TPageName,
+      ...query: IfAny<
+        IPageNameToQueryTypes[TPageName],
+        [],
+        IfNever<
+          RequiredKeys<IPageNameToQueryTypes[TPageName]>,
+          [IPageNameToQueryTypes[TPageName]?],
+          [IPageNameToQueryTypes[TPageName]]
+        >
       >
-    } = {
-      ${normalizedRoutes.map(route => dedent`
-        ${route.name}: {
-          ${route.params.map(param => dedent`
-            ${JSON.stringify(param.originalName)}: {
-              name: ${JSON.stringify(param.name)},
-              jsType: ${isArray(param.jsType) ? `[${param.jsType[0].name}]` : param.jsType.name},
-            },
-          `).join('\n')}
-        },
-      `).join('\n')}
-    }
-
-    function toOriginalParams<TPageName extends IPageName>(name: TPageName, params?: IPageParams[TPageName]): Record<any, any> {
-      if (!params) return {}
-      const originalParams: Record<any, any> = {}
-      for (const key of Object.keys(params)) {
-        const originalParamInfo = (originalParamsInfo as any)[name][key]
-        if (originalParamInfo?.originalName) {
-          originalParams[originalParamInfo.originalName] = (params as any)[key] == null ? undefined : String((params as any)[key])
-        }
-      }
-      return originalParams
-    }
-
-    function toNormalizedParams<TPageName extends IPageName>(name: TPageName, params?: Record<any, any>): IPageParams[TPageName] {
-      if (!params) return {} as any
-      const normalizedParams: IPageParams[TPageName] = {} as any
-      for (const key of Object.keys(params)) {
-        const normalizedParamInfo = normalizedParamsInfo[name][key]
-        if (normalizedParamInfo?.name) {
-          (normalizedParams as any)[normalizedParamInfo.name] = (
-            normalizedParamInfo.jsType === Boolean
-              ? params[key] === 'true'
-              : normalizedParamInfo.jsType === Number
-                ? (Array.isArray(params[key]) ? params[key].map(Number) : Number(params[key]))
-                : params[key]
-          )
-        }
-      }
-      return normalizedParams
-    }
-
-    interface IPageParamsOptional extends Record<IPageName, boolean> {
-      ${normalizedRoutes.map(route => dedent`
-        ${route.name}: ${route.paramsIsOptional},
-      `).join('\n')}
-    }
-
-    export function navigateTo<TPageName extends IPageName>(name: TPageName, ...params: IPageParamsOptional[TPageName] extends true ? [] : [IPageParams[TPageName]]) {
-      history.push(toPath[name](toOriginalParams(name, params[0])))
-    }
-
-    export function redirectTo<TPageName extends IPageName>(name: TPageName, ...params: IPageParamsOptional[TPageName] extends true ? [] : [IPageParams[TPageName]]) {
-      history.replace(toPath[name](toOriginalParams(name, params[0])))
+    ) {
+      // @ts-ignore
+      history.replace({
+        pathname: pageNameToPath[pageName],
+        query: query[0],
+      })
     }
 
     export function navigateBack(delta: number = 1) {
@@ -173,22 +86,14 @@ export function makeExports(normalizedRoutes: INormalizedRoute[]): string {
       history.go(delta)
     }
 
-    export function usePageParams<TPageName extends IPageName>(name: TPageName): IPageParams[TPageName] {
-      const params = useParams()
-      const normalizedParams = useMemo(
-        () => toNormalizedParams(name, params),
-        [name, params],
+    export function useQuery<TPageName extends IPageName>(pageName: TPageName): IPageNameToQueryTypes[TPageName] {
+      // @ts-ignore
+      const { query } = useLocation()
+      const parsedQuery = useMemo(
+        () => parseQuery(query),
+        [query],
       )
-      return normalizedParams
-    }
-
-    export function usePageQuery<TPageName extends IPageName>(name: TPageName): IPageInternalQuery[TPageName] {
-      const params = useParams()
-      const normalizedParams = useMemo(
-        () => toNormalizedParams(name, params),
-        [name, params],
-      )
-      return normalizedParams
+      return parsedQuery
     }
   `
 }

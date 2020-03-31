@@ -18,12 +18,5 @@
     "lib": [
       "esnext"
     ]
-  },
-  "include": [
-    "src/**/*.ts"
-  ],
-  "exclude": [
-    "**/*.test.ts",
-    "**/__*__"
-  ]
+  }
 }

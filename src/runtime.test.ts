@@ -1,18 +1,61 @@
-import {getNormalizedQuery, queryTypes} from './runtime'
+import { parseQuery } from './runtime'
 
-const pageQueryTypes = {
-  id: queryTypes.number(),
-  pid: queryTypes.number().enum([1, 2, 5]),
-  gender: queryTypes.string().enum(['male', 'female']).optional('male'),
-  all: queryTypes.boolean(),
-  noName: queryTypes.boolean().optional(),
-  p2id: queryTypes.number().enum([1, 2]),
-}
+test('true', () => {
+  expect(parseQuery({
+    true: 'true',
+  })).toEqual({
+    true: true,
+  })
+})
 
-test('表现正常', () => {
-  expect(getNormalizedQuery({
-    id: '12',
-  }, pageQueryTypes)).toMatchObject({
-    id: 12,
+test('false', () => {
+  expect(parseQuery({
+    false: 'false',
+  })).toEqual({
+    false: false,
+  })
+})
+
+test('数值', () => {
+  expect(parseQuery({
+    1: '1',
+    2: '2.0',
+    3: '-48',
+    4: '1e3',
+  })).toEqual({
+    1: 1,
+    2: 2,
+    3: -48,
+    4: 1e3,
+  })
+})
+
+test('其他', () => {
+  expect(parseQuery({
+    's': 's',
+    '-': '-',
+    '___': '___',
+    '我们': '我们',
+    'call120': 'call120',
+  })).toEqual({
+    's': 's',
+    '-': '-',
+    '___': '___',
+    '我们': '我们',
+    'call120': 'call120',
+  })
+})
+
+test('综合', () => {
+  expect(parseQuery({
+    isMale: 'true',
+    age: '40',
+    name: 'Jane',
+    isChinese: 'false',
+  })).toEqual({
+    isMale: true,
+    age: 40,
+    name: 'Jane',
+    isChinese: false,
   })
 })

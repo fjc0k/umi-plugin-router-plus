@@ -28,8 +28,8 @@
     "url": "https://github.com/fjc0k"
   },
   "scripts": {
-    "dev": "rimraf lib && tsc-watch --onSuccess 'cross-env APP_ROOT=./example umi dev'",
-    "build": "rimraf lib && tsc",
+    "dev": "rimraf lib && tsc-watch -p tsconfig.build.json --onSuccess 'cross-env APP_ROOT=./example umi dev'",
+    "build": "rimraf lib && tsc -p tsconfig.build.json",
     "test": "jest --coverage",
     "release": "npm run test && standard-version -a && npm run build && git push --follow-tags origin master && npm publish"
   },
@@ -38,9 +38,10 @@
     "extends": "io"
   },
   "eslintIgnore": [
-    "node_modules",
-    "lib",
-    "__snapshots__",
+    "node_modules/",
+    ".umi/",
+    "lib/",
+    "__*__/",
     "*.js"
   ],
   "jest": {
@@ -73,7 +74,7 @@
     "codecov": "^3.6.5",
     "cross-env": "^7.0.2",
     "eslint": "^6.8.0",
-    "eslint-config-io": "^0.8.4",
+    "eslint-config-io": "^0.8.7",
     "husky": "^4.2.3",
     "jest": "^25.1.0",
     "jest-snapshot-serializer-function-name": "^1.1.0",
