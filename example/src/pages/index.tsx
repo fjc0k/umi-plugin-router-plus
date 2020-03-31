@@ -52,6 +52,23 @@ export default function () {
         }}>
         navigateTo UserRank gender=female
       </button>
+      <button
+        onClick={() => {
+          navigateTo('PostComment', {
+            id: 1,
+          })
+        }}>
+        navigateTo PostComment id=1
+      </button>
+      <button
+        onClick={() => {
+          navigateTo('PostReplyDetail', {
+            id: 2,
+            replyId: 6,
+          })
+        }}>
+        navigateTo PostReplyDetail id=2,replyId=6
+      </button>
     </div>
   )
 }

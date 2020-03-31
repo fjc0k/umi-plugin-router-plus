@@ -1,17 +1,38 @@
-import { IRoute, utils } from 'umi'
+import { utils } from 'umi'
+
+interface IBaseRoute<T> {
+  path?: string,
+  routes?: T[],
+}
 
 /**
  * 将路由表转换为只有一级。
  *
  * @param routes 路由表
  */
-export function flatRoutes(routes: IRoute[]): IRoute[] {
+export function flattenRoutes<T extends IBaseRoute<T>>(routes: T[]): T[] {
   return utils.lodash.flatten(
     routes.map(route => [
       route,
-      ...flatRoutes(route.routes || []),
+      ...flattenRoutes(route.routes || []),
     ]),
   )
+}
+
+/**
+ * 遍历路由表。
+ *
+ * @param routes 路由表
+ * @param cb 回调
+ */
+export function walkRoutes<T extends IBaseRoute<T>, X>(routes: T[], cb: (route: T, parent: T | undefined) => X, parent?: T): X[] {
+  return routes.map(route => {
+    const currentRoute = { ...route }
+    if (!utils.lodash.isEmpty(currentRoute.routes)) {
+      currentRoute.routes = walkRoutes(currentRoute.routes!, cb, currentRoute) as any
+    }
+    return cb(currentRoute, parent)
+  })
 }
 
 /**
@@ -24,7 +45,7 @@ export function flatRoutes(routes: IRoute[]): IRoute[] {
  *
  * @param route 路由信息
  */
-export function getRouteName(route: IRoute): string {
+export function getRouteName(route: IBaseRoute<any>): string {
   const originalName = (route.path || /* istanbul ignore next */ '').replace(/\.html?$/i, '')
   const baseName = utils.lodash.upperFirst(utils.lodash.camelCase(originalName)) || 'Index'
   const suffix = utils.lodash.isEmpty(route.routes) ? '' : 'Layout'

@@ -1,4 +1,4 @@
-import { flatRoutes, getRouteName } from './utils'
+import { flattenRoutes, getRouteName, walkRoutes } from './utils'
 import { IRoute, utils } from 'umi'
 
 const routes: IRoute[] = [
@@ -51,10 +51,23 @@ const routes: IRoute[] = [
   },
 ]
 
-describe('flatRoutes', () => {
+describe('flattenRoutes', () => {
   test('表现正常', () => {
     const _routes = utils.lodash.cloneDeep(routes)
-    expect(flatRoutes(_routes)).toMatchSnapshot('一级路由表')
+    expect(flattenRoutes(_routes)).toMatchSnapshot('一级路由表')
+  })
+})
+
+describe('walkRoutes', () => {
+  test('表现正常', () => {
+    const _routes = utils.lodash.cloneDeep(routes)
+    expect(walkRoutes(_routes, (route, parent) => {
+      return {
+        ...route,
+        __walk: true,
+        __parent: parent && parent.path,
+      }
+    })).toMatchSnapshot('遍历路由表')
   })
 })
 

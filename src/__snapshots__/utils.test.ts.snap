@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`flatRoutes 表现正常: 一级路由表 1`] = `
+exports[`flattenRoutes 表现正常: 一级路由表 1`] = `
 Array [
   Object {
     "path": "1",
@@ -105,6 +105,80 @@ Array [
   },
   Object {
     "path": "4.1.1.1.1",
+  },
+]
+`;
+
+exports[`walkRoutes 表现正常: 遍历路由表 1`] = `
+Array [
+  Object {
+    "__parent": undefined,
+    "__walk": true,
+    "path": "1",
+    "routes": Array [
+      Object {
+        "__parent": "1",
+        "__walk": true,
+        "path": "1.1",
+        "routes": Array [],
+      },
+      Object {
+        "__parent": "1",
+        "__walk": true,
+        "path": "1.2",
+        "routes": Array [
+          Object {
+            "__parent": "1.2",
+            "__walk": true,
+            "path": "1.2.1",
+          },
+        ],
+      },
+    ],
+  },
+  Object {
+    "__parent": undefined,
+    "__walk": true,
+    "path": "2",
+  },
+  Object {
+    "__parent": undefined,
+    "__walk": true,
+    "path": "3",
+    "routes": Array [],
+  },
+  Object {
+    "__parent": undefined,
+    "__walk": true,
+    "path": "4",
+    "routes": Array [
+      Object {
+        "__parent": "4",
+        "__walk": true,
+        "path": "4.1",
+        "routes": Array [
+          Object {
+            "__parent": "4.1",
+            "__walk": true,
+            "path": "4.1.1",
+            "routes": Array [
+              Object {
+                "__parent": "4.1.1",
+                "__walk": true,
+                "path": "4.1.1.1",
+                "routes": Array [
+                  Object {
+                    "__parent": "4.1.1.1",
+                    "__walk": true,
+                    "path": "4.1.1.1.1",
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+    ],
   },
 ]
 `;

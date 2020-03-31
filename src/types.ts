@@ -10,4 +10,10 @@ export interface ISyntheticRoute extends Pick<IRoute, KnownKeys<IRoute>> {
   pageName: string,
   /** 页面参数类型的名称 */
   pageParamsTypesName: string,
+  /** 父页面名称 */
+  parentPageName?: string,
+  /** 子路由列表 */
+  routes?: ISyntheticRoute[],
+  /** 是否是布局页面 */
+  isLayout: boolean,
 }

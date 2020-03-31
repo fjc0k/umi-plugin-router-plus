@@ -10,11 +10,13 @@ export function makeExports(syntheticRoutes: ISyntheticRoute[]): string {
     type IfAny<T, Y, N> = 0 extends (1 & T) ? Y : N
     type IfNever<T, Y, N> = [T] extends [never] ? Y : N
     type RequiredKeys<T> = { [K in keyof T]-?: {} extends Pick<T, K> ? never : K }[keyof T]
+    type Merge<M, N> = Omit<M, Extract<keyof M, keyof N>> & N
 
 
     // ==== 页面名称 ====
     type IPageName = ${
       syntheticRoutes
+        .filter(route => !route.isLayout)
         .map(route => `'${route.pageName}'`)
         .join(' | ')
     }
@@ -30,14 +32,26 @@ export function makeExports(syntheticRoutes: ISyntheticRoute[]): string {
     // ==== 页面名称 -> 页面参数 ====
     interface IPageNameToPageParams {
       ${syntheticRoutes.map(route => dedent`
-        ${route.pageName}: ${route.pageParamsTypesName},
+        ${route.pageName}: IfAny<${route.pageParamsTypesName}, never, ${route.pageParamsTypesName}>,
+      `).join('\n')}
+    }
+
+
+    // ==== 页面名称 -> 页面的完整参数 ====
+    interface IPageNameToPageFullParams {
+      ${syntheticRoutes.map(route => dedent`
+        ${route.pageName}: ${
+          !route.parentPageName
+            ? `IPageNameToPageParams['${route.pageName}']`
+            : `Merge<IPageNameToPageFullParams['${route.parentPageName}'], IfNever<IPageNameToPageParams['${route.pageName}'], {}, IPageNameToPageParams['${route.pageName}']>>`
+        },
       `).join('\n')}
     }
 
 
     // ==== 页面名称 -> 页面路径 ====
     const pageNameToPagePath = {
-      ${syntheticRoutes.map(route => dedent`
+      ${syntheticRoutes.filter(route => !route.isLayout).map(route => dedent`
         ${route.pageName}: ${JSON.stringify(route.path)},
       `).join('\n')}
     }
@@ -46,13 +60,13 @@ export function makeExports(syntheticRoutes: ISyntheticRoute[]): string {
     // ==== 路由辅助函数 ====
     export function navigateTo<TPageName extends IPageName>(
       pageName: TPageName,
-      ...params: IfAny<
-        IPageNameToPageParams[TPageName],
+      ...params: IfNever<
+        IPageNameToPageFullParams[TPageName],
         [],
         IfNever<
-          RequiredKeys<IPageNameToPageParams[TPageName]>,
-          [IPageNameToPageParams[TPageName]?],
-          [IPageNameToPageParams[TPageName]]
+          RequiredKeys<IPageNameToPageFullParams[TPageName]>,
+          [IPageNameToPageFullParams[TPageName]?],
+          [IPageNameToPageFullParams[TPageName]]
         >
       >
     ) {
@@ -67,13 +81,13 @@ export function makeExports(syntheticRoutes: ISyntheticRoute[]): string {
 
     export function redirectTo<TPageName extends IPageName>(
       pageName: TPageName,
-      ...params: IfAny<
-        IPageNameToPageParams[TPageName],
+      ...params: IfNever<
+        IPageNameToPageFullParams[TPageName],
         [],
         IfNever<
-          RequiredKeys<IPageNameToPageParams[TPageName]>,
-          [IPageNameToPageParams[TPageName]?],
-          [IPageNameToPageParams[TPageName]]
+          RequiredKeys<IPageNameToPageFullParams[TPageName]>,
+          [IPageNameToPageFullParams[TPageName]?],
+          [IPageNameToPageFullParams[TPageName]]
         >
       >
     ) {
@@ -94,7 +108,7 @@ export function makeExports(syntheticRoutes: ISyntheticRoute[]): string {
       history.go(delta)
     }
 
-    export function usePageParams<TPageName extends IPageName>(pageName: TPageName): IPageNameToPageParams[TPageName] {
+    export function usePageParams<TPageName extends IPageName>(pageName: TPageName): IPageNameToPageFullParams[TPageName] {
       // @ts-ignore
       const { query } = useLocation()
       const params = useMemo(

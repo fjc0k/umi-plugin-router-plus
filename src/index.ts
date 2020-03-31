@@ -1,5 +1,5 @@
-import { flatRoutes, getRouteName } from './utils'
-import { IApi } from 'umi'
+import { flattenRoutes, getRouteName, walkRoutes } from './utils'
+import { IApi, utils } from 'umi'
 import { ISyntheticRoute } from './types'
 import { makeExports } from './templates'
 import { PLUGIN_ID, PLUGIN_KEY } from './consts'
@@ -11,9 +11,9 @@ export default function (api: IApi) {
   })
 
   api.onGenerateFiles(async () => {
-    const routes = flatRoutes(await api.getRoutes())
+    const routes = await api.getRoutes()
     const usedNames = new Map<ISyntheticRoute['pageName'], ISyntheticRoute['path']>()
-    const syntheticRoutes: ISyntheticRoute[] = routes.map(route => {
+    const syntheticRoutes = walkRoutes(routes, (route, parentRoute) => {
       const routeName = getRouteName(route)
       /* istanbul ignore if */
       if (usedNames.has(routeName)) {
@@ -26,11 +26,14 @@ export default function (api: IApi) {
         ...route,
         pageName: routeName,
         pageParamsTypesName: `I${routeName}ParamsTypes`,
-      }
+        parentPageName: parentRoute && getRouteName(parentRoute),
+        isLayout: !utils.lodash.isEmpty(route.routes),
+      } as ISyntheticRoute
     })
+    const flatSyntheticRoutes = flattenRoutes(syntheticRoutes)
     api.writeTmpFile({
       path: `${PLUGIN_ID}/exports.ts`,
-      content: makeExports(syntheticRoutes),
+      content: makeExports(flatSyntheticRoutes),
     })
   })
 
