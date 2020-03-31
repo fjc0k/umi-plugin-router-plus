@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.1](https://github.com/fjc0k/umi-plugin-router-plus/compare/v1.1.0...v1.1.1) (2020-03-31)
+
+
+### Bug Fixes
+
+* usePageParams 应可传入 layout 页面的名称 ([a9d8e91](https://github.com/fjc0k/umi-plugin-router-plus/commit/a9d8e9135bbddd56122ea83859e47255d419400f))
+
 ## [1.1.0](https://github.com/fjc0k/umi-plugin-router-plus/compare/v1.0.0...v1.1.0) (2020-03-31)
 
 
