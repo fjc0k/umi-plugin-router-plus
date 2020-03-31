@@ -14,13 +14,19 @@ export function makeExports(syntheticRoutes: ISyntheticRoute[]): string {
 
 
     // ==== 页面名称 ====
-    type IPageName = ${
+    type INormalPageName = ${
       syntheticRoutes
         .filter(route => !route.isLayout)
         .map(route => `'${route.pageName}'`)
-        .join(' | ')
+        .join(' | ') || 'never'
     }
-
+    type ILayoutPageName = ${
+      syntheticRoutes
+        .filter(route => route.isLayout)
+        .map(route => `'${route.pageName}'`)
+        .join(' | ') || 'never'
+    }
+    type IPageName = INormalPageName | ILayoutPageName
 
     // ==== 页面参数 ====
     ${syntheticRoutes.filter(route => !!route.component).map(route => dedent`
@@ -58,7 +64,7 @@ export function makeExports(syntheticRoutes: ISyntheticRoute[]): string {
 
 
     // ==== 路由辅助函数 ====
-    export function navigateTo<TPageName extends IPageName>(
+    export function navigateTo<TPageName extends INormalPageName>(
       pageName: TPageName,
       ...params: IfNever<
         IPageNameToPageFullParams[TPageName],
@@ -79,7 +85,7 @@ export function makeExports(syntheticRoutes: ISyntheticRoute[]): string {
       })
     }
 
-    export function redirectTo<TPageName extends IPageName>(
+    export function redirectTo<TPageName extends INormalPageName>(
       pageName: TPageName,
       ...params: IfNever<
         IPageNameToPageFullParams[TPageName],
