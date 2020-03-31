@@ -1,7 +1,7 @@
 {
   "name": "umi-plugin-router-plus",
   "version": "0.0.1",
-  "description": "为 Umi 带来增强的路由体验。",
+  "description": "一款 Umi 3 插件，为你带来类型友好的页面参数的定义、传递与获取。",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "homepage": "https://github.com/fjc0k/umi-plugin-router-plus",
@@ -31,7 +31,7 @@
     "dev": "rimraf lib && tsc-watch -p tsconfig.build.json --onSuccess 'cross-env APP_ROOT=./example umi dev'",
     "build": "rimraf lib && tsc -p tsconfig.build.json",
     "test": "jest --coverage",
-    "release": "npm run test && standard-version -a && npm run build && git push --follow-tags origin master && npm publish"
+    "release": "standard-version -a && npm run build && git push --follow-tags origin master && npm publish"
   },
   "eslintConfig": {
     "root": true,

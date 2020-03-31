@@ -1,6 +1,6 @@
 # umi-plugin-router-plus ![Node CI](https://github.com/fjc0k/umi-plugin-router-plus/workflows/Node%20CI/badge.svg) [![codecov](https://codecov.io/gh/fjc0k/umi-plugin-router-plus/branch/master/graph/badge.svg)](https://codecov.io/gh/fjc0k/umi-plugin-router-plus)
 
-一款 [Umi 3](https://github.com/umijs/umi) 插件，为你带来**类型友好**的**基于 query string** 的**页面参数的定义、传递与获取**。
+一款 [Umi 3](https://github.com/umijs/umi) 插件，为你带来**类型友好**的**页面参数的定义、传递与获取**。
 
 ----
 
@@ -13,12 +13,12 @@
   - [获取页面参数](#获取页面参数)
   - [传递页面参数](#传递页面参数)
 - [API 列表](#api-列表)
-    - [navigateTo(pageName, query)](#navigatetopagename-query)
-    - [redirectTo(pageName, query)](#redirecttopagename-query)
+    - [navigateTo(pageName, params)](#navigatetopagename-params)
+    - [redirectTo(pageName, params)](#redirecttopagename-params)
     - [navigateBack(delta)](#navigatebackdelta)
     - [navigateForward(delta)](#navigateforwarddelta)
-    - [useQuery(pageName)](#usequerypagename)
-- [页面名称(pageName)如何定义](#页面名称pagename如何定义)
+    - [usePageParams(pageName)](#usepageparamspagename)
+- [页面名称](#页面名称)
 - [许可](#许可)
 
 <!-- /TOC -->
@@ -41,12 +41,12 @@ npm i umi-plugin-router-plus -D
 
 ### 定义页面参数
 
-在页面文件内定义 `Query` 类型，并将之导出即可：
+在页面文件内定义 `Params` 类型，并将之导出即可：
 
 ```tsx
 // src/pages/test.tsx
 
-export interface Query {
+export interface Params {
   id: number,
   enabled?: boolean,
   gender: 'male' | 'female',
@@ -56,14 +56,14 @@ export interface Query {
 
 ### 获取页面参数
 
-在页面文件内定义好页面参数后，只需在页面组件内使用 `useQuery` 即可获取：
+在页面文件内定义好页面参数后，只需在页面组件内使用 `usePageParams` 即可获取：
 
 ```tsx
 // src/pages/test.tsx
 import React from 'react'
-import { useQuery } from 'umi'
+import { usePageParams } from 'umi'
 
-export interface Query {
+export interface Params {
   id: number,
   enabled?: boolean,
   gender: 'male' | 'female',
@@ -76,7 +76,7 @@ export default function () {
     enabled = false, // 指定默认值
     gender,
     name,
-  } = useQuery('Test')
+  } = usePageParams('Test')
 
   return (
     <div>id is: {id}</div>
@@ -86,9 +86,11 @@ export default function () {
 
 ### 传递页面参数
 
+见下：[API 列表](#api-列表)。
+
 ## API 列表
 
-#### navigateTo(pageName, query)
+#### navigateTo(pageName, params)
 
 ```ts
 import { navigateTo } from 'umi'
@@ -99,7 +101,7 @@ navigateTo('User', { id: 2 })
 
 保留当前页面，跳转至某个页面，和 `history.push` 效果一致。
 
-#### redirectTo(pageName, query)
+#### redirectTo(pageName, params)
 
 ```ts
 import { redirectTo } from 'umi'
@@ -132,20 +134,22 @@ navigateForward(2)
 
 保留当前页面，前进到下一页面或多级页面，和 `history.goForward` 效果一致。
 
-#### useQuery(pageName)
+#### usePageParams(pageName)
 
 ```ts
-import { useQuery } from 'umi'
+import { usePageParams } from 'umi'
 
-const { id } = useQuery('User')
+const { id } = usePageParams('User')
 ```
 
-在页面组件中获取传入的参数值，和 `useParams` 效果一致，但类型提示更友好，参数值也会根据参数的类型定义格式化，拿来即用，无需转换。
+获取传给页面的参数。
 
 
-## 页面名称(pageName)如何定义
+## 页面名称
 
 页面名称会根据路由的 `path` 自动生成，如果程序没有提示你页面名称重复，大可不必深究。
+
+比如，页面路径 `/user/detail` 生成的页面名称为 `UserDetail`。
 
 ## 许可
 
