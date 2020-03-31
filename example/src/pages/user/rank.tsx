@@ -1,14 +1,14 @@
 import React from 'react'
-import { useQuery } from 'umi'
+import { usePageParams } from 'umi'
 
 export default function () {
-  const { gender = 'male' } = useQuery('UserRank')
+  const { gender = 'male' } = usePageParams('UserRank')
 
   return (
     <div>{gender} rank</div>
   )
 }
 
-export interface Query {
+export interface Params {
   gender?: 'male' | 'female',
 }

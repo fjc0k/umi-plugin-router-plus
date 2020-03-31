@@ -12,7 +12,7 @@ export default function (api: IApi) {
 
   api.onGenerateFiles(async () => {
     const routes = flatRoutes(await api.getRoutes())
-    const usedNames = new Map<ISyntheticRoute['name'], ISyntheticRoute['path']>()
+    const usedNames = new Map<ISyntheticRoute['pageName'], ISyntheticRoute['path']>()
     const syntheticRoutes: ISyntheticRoute[] = routes.map(route => {
       const routeName = getRouteName(route)
       /* istanbul ignore if */
@@ -24,10 +24,8 @@ export default function (api: IApi) {
       }
       return {
         ...route,
-        names: {
-          page: routeName,
-          QueryTypes: `I${routeName}QueryTypes`,
-        },
+        pageName: routeName,
+        pageParamsTypesName: `I${routeName}ParamsTypes`,
       }
     })
     api.writeTmpFile({

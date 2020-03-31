@@ -1,8 +1,8 @@
 import React from 'react'
-import { navigateTo, useQuery } from 'umi'
+import { navigateTo, usePageParams } from 'umi'
 
 export default function User() {
-  const { id } = useQuery('User')
+  const { id } = usePageParams('User')
 
   return (
     <div>
@@ -19,7 +19,7 @@ export default function User() {
   )
 }
 
-export interface Query {
+export interface Params {
   /** ID */
   id: number,
 }

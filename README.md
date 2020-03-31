@@ -11,6 +11,7 @@
 - [使用介绍](#使用介绍)
   - [定义页面参数](#定义页面参数)
   - [获取页面参数](#获取页面参数)
+  - [传递页面参数](#传递页面参数)
 - [API 列表](#api-列表)
     - [navigateTo(pageName, query)](#navigatetopagename-query)
     - [redirectTo(pageName, query)](#redirecttopagename-query)
@@ -83,14 +84,7 @@ export default function () {
 }
 ```
 
-`useQuery` 会自动转换传入的页面参数值的类型：
-
-- 参数值为字符串 `true`，则表示这是一个布尔值 `true`；
-- 参数值为字符串 `false`，则表示这是一个布尔值 `false`；
-- 参数值为数值字符串，则表示这是一个数字；
-- 参数值为其他字符串，则原样返回。
-
-因此，你应避免使用 `true`
+### 传递页面参数
 
 ## API 列表
 

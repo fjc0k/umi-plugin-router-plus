@@ -15,30 +15,30 @@ export function makeExports(syntheticRoutes: ISyntheticRoute[]): string {
     // ==== 页面名称 ====
     type IPageName = ${
       syntheticRoutes
-        .map(route => `'${route.names.page}'`)
+        .map(route => `'${route.pageName}'`)
         .join(' | ')
     }
 
 
-    // ==== 页面查询 ====
+    // ==== 页面参数 ====
     ${syntheticRoutes.filter(route => !!route.component).map(route => dedent`
       // @ts-ignore
-      import { Query as ${route.names.QueryTypes} } from ${JSON.stringify(route.component)}
+      import { Params as ${route.pageParamsTypesName} } from ${JSON.stringify(route.component)}
     `).join('\n')}
 
 
-    // ==== 页面名称 -> 页面查询 ====
-    interface IPageNameToQueryTypes {
+    // ==== 页面名称 -> 页面参数 ====
+    interface IPageNameToPageParams {
       ${syntheticRoutes.map(route => dedent`
-        ${route.names.page}: ${route.names.QueryTypes},
+        ${route.pageName}: ${route.pageParamsTypesName},
       `).join('\n')}
     }
 
 
     // ==== 页面名称 -> 页面路径 ====
-    const pageNameToPath = {
+    const pageNameToPagePath = {
       ${syntheticRoutes.map(route => dedent`
-        ${route.names.page}: ${JSON.stringify(route.path)},
+        ${route.pageName}: ${JSON.stringify(route.path)},
       `).join('\n')}
     }
 
@@ -46,42 +46,42 @@ export function makeExports(syntheticRoutes: ISyntheticRoute[]): string {
     // ==== 路由辅助函数 ====
     export function navigateTo<TPageName extends IPageName>(
       pageName: TPageName,
-      ...query: IfAny<
-        IPageNameToQueryTypes[TPageName],
+      ...params: IfAny<
+        IPageNameToPageParams[TPageName],
         [],
         IfNever<
-          RequiredKeys<IPageNameToQueryTypes[TPageName]>,
-          [IPageNameToQueryTypes[TPageName]?],
-          [IPageNameToQueryTypes[TPageName]]
+          RequiredKeys<IPageNameToPageParams[TPageName]>,
+          [IPageNameToPageParams[TPageName]?],
+          [IPageNameToPageParams[TPageName]]
         >
       >
     ) {
       // @ts-ignore
       history.push({
-        pathname: pageNameToPath[pageName],
+        pathname: pageNameToPagePath[pageName],
         query: {
-          __query__: JSON.stringify(query[0]),
+          __params__: JSON.stringify(params[0]),
         },
       })
     }
 
     export function redirectTo<TPageName extends IPageName>(
       pageName: TPageName,
-      ...query: IfAny<
-        IPageNameToQueryTypes[TPageName],
+      ...params: IfAny<
+        IPageNameToPageParams[TPageName],
         [],
         IfNever<
-          RequiredKeys<IPageNameToQueryTypes[TPageName]>,
-          [IPageNameToQueryTypes[TPageName]?],
-          [IPageNameToQueryTypes[TPageName]]
+          RequiredKeys<IPageNameToPageParams[TPageName]>,
+          [IPageNameToPageParams[TPageName]?],
+          [IPageNameToPageParams[TPageName]]
         >
       >
     ) {
       // @ts-ignore
       history.replace({
-        pathname: pageNameToPath[pageName],
+        pathname: pageNameToPagePath[pageName],
         query: {
-          __query__: JSON.stringify(query[0]),
+          __params__: JSON.stringify(params[0]),
         },
       })
     }
@@ -94,22 +94,22 @@ export function makeExports(syntheticRoutes: ISyntheticRoute[]): string {
       history.go(delta)
     }
 
-    export function useQuery<TPageName extends IPageName>(pageName: TPageName): IPageNameToQueryTypes[TPageName] {
+    export function usePageParams<TPageName extends IPageName>(pageName: TPageName): IPageNameToPageParams[TPageName] {
       // @ts-ignore
       const { query } = useLocation()
-      const parsedQuery = useMemo(
+      const params = useMemo(
         () => {
           try {
-            return query.__query__
-              ? JSON.parse(query.__query__)
+            return query.__params__
+              ? JSON.parse(query.__params__)
               : {}
           } catch (err) {
             return {}
           }
         },
-        [query.__query__],
+        [query.__params__],
       )
-      return parsedQuery
+      return params
     }
   `
 }
