@@ -25,12 +25,12 @@ export default function (api: IApi) {
       return {
         ...route,
         pageName: routeName,
-        pageParamsTypesName: `I${routeName}ParamsTypes`,
+        pageOwnParamsTypesName: `I${routeName}OwnParams`,
         parentPageName: parentRoute && getRouteName(parentRoute),
         isLayout: !utils.lodash.isEmpty(route.routes),
       } as ISyntheticRoute
     })
-    const flatSyntheticRoutes = flattenRoutes(syntheticRoutes)
+    const flatSyntheticRoutes = flattenRoutes(syntheticRoutes).filter(route => !!route.component)
     api.writeTmpFile({
       path: `${PLUGIN_ID}/exports.ts`,
       content: makeExports(flatSyntheticRoutes),

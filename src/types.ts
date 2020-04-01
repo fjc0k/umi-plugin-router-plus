@@ -8,8 +8,8 @@ type KnownKeys<T> = {
 export interface ISyntheticRoute extends Pick<IRoute, KnownKeys<IRoute>> {
   /** 页面名称 */
   pageName: string,
-  /** 页面参数类型的名称 */
-  pageParamsTypesName: string,
+  /** 页面自身参数类型的名称 */
+  pageOwnParamsTypesName: string,
   /** 父页面名称 */
   parentPageName?: string,
   /** 子路由列表 */

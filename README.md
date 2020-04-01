@@ -51,6 +51,7 @@ export interface Params {
   enabled?: boolean,
   gender: 'male' | 'female',
   name: string,
+  tags?: string[],
 }
 ```
 
@@ -68,6 +69,7 @@ export interface Params {
   enabled?: boolean,
   gender: 'male' | 'female',
   name: string,
+  tags?: string[],
 }
 
 export default function () {
@@ -76,6 +78,7 @@ export default function () {
     enabled = false, // 指定默认值
     gender,
     name,
+    tags = [],
   } = usePageParams('Test')
 
   return (
