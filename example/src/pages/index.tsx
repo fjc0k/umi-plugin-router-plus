@@ -1,7 +1,12 @@
 import React from 'react'
-import { navigateBack, navigateForward, navigateTo, redirectTo } from 'umi'
+import { navigateBack, navigateForward, navigateTo, redirectTo, useQuery } from 'umi'
 
 export default function () {
+  const { name } = useQuery<{
+    name: string,
+  }>()
+  console.log(name)
+
   return (
     <div>
       <button

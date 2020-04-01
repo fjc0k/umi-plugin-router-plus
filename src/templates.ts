@@ -207,5 +207,14 @@ export function makeExports(syntheticRoutes: ISyntheticRoute[]): string {
       )
       return params
     }
+
+    /**
+     * 获取传给页面的 query。
+     */
+    export function useQuery<T extends Record<string, string> = Record<string, string>>(): T {
+      // @ts-ignore
+      const { query } = useLocation()
+      return query
+    }
   `
 }

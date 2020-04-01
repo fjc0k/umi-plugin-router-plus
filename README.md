@@ -13,11 +13,12 @@
   - [获取页面参数](#获取页面参数)
   - [传递页面参数](#传递页面参数)
 - [API 列表](#api-列表)
-    - [navigateTo(pageName, params)](#navigatetopagename-params)
-    - [redirectTo(pageName, params)](#redirecttopagename-params)
-    - [navigateBack(delta)](#navigatebackdelta)
-    - [navigateForward(delta)](#navigateforwarddelta)
-    - [usePageParams(pageName)](#usepageparamspagename)
+  - [navigateTo(pageName, params)](#navigatetopagename-params)
+  - [redirectTo(pageName, params)](#redirecttopagename-params)
+  - [navigateBack(delta)](#navigatebackdelta)
+  - [navigateForward(delta)](#navigateforwarddelta)
+  - [usePageParams(pageName)](#usepageparamspagename)
+  - [useQuery()](#usequery)
 - [页面名称](#页面名称)
 - [许可](#许可)
 
@@ -93,7 +94,7 @@ export default function () {
 
 ## API 列表
 
-#### navigateTo(pageName, params)
+### navigateTo(pageName, params)
 
 ```ts
 import { navigateTo } from 'umi'
@@ -104,7 +105,7 @@ navigateTo('User', { id: 2 })
 
 保留当前页面，跳转至某个页面，和 `history.push` 效果一致。
 
-#### redirectTo(pageName, params)
+### redirectTo(pageName, params)
 
 ```ts
 import { redirectTo } from 'umi'
@@ -115,7 +116,7 @@ redirectTo('User', { id: 2 })
 
 关闭当前页面，跳转至某个页面，和 `history.replace` 效果一致。
 
-#### navigateBack(delta)
+### navigateBack(delta)
 
 ```ts
 import { navigateBack } from 'umi'
@@ -126,7 +127,7 @@ navigateBack(2)
 
 关闭当前页面，返回上一页面或多级页面，和 `history.goBack` 效果一致。
 
-#### navigateForward(delta)
+### navigateForward(delta)
 
 ```ts
 import { navigateForward } from 'umi'
@@ -137,7 +138,7 @@ navigateForward(2)
 
 保留当前页面，前进到下一页面或多级页面，和 `history.goForward` 效果一致。
 
-#### usePageParams(pageName)
+### usePageParams(pageName)
 
 ```ts
 import { usePageParams } from 'umi'
@@ -147,6 +148,17 @@ const { id } = usePageParams('User')
 
 获取传给页面的参数。
 
+### useQuery()
+
+```ts
+import { useQuery } from 'umi'
+
+const { source } = useQuery<{
+  source: string,
+}>()
+```
+
+获取传给页面的 query。
 
 ## 页面名称
 
