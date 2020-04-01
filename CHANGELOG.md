@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.3.0](https://github.com/fjc0k/umi-plugin-router-plus/compare/v1.2.0...v1.3.0) (2020-04-01)
+
+
+### Features
+
+* 增加 useQuery 获取传给页面的 query ([0cc2c1e](https://github.com/fjc0k/umi-plugin-router-plus/commit/0cc2c1e50931cd66c6f4d38dc87ed74b4c412235))
+
 ## [1.2.0](https://github.com/fjc0k/umi-plugin-router-plus/compare/v1.1.2...v1.2.0) (2020-04-01)
 
 
