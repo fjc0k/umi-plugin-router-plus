@@ -3,7 +3,5 @@ import { usePageParams } from 'umi'
 
 export default function () {
   const { id } = usePageParams('PostComment')
-  return (
-    <div>post#{id} comment</div>
-  )
+  return <div>post#{id} comment</div>
 }

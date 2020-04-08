@@ -1,7 +1,7 @@
 import React from 'react'
 
 export interface Params {
-  id: number,
+  id: number
 }
 
 const Layout: React.FC = props => props.children as any

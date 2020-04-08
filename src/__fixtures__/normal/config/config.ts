@@ -1,4 +1,4 @@
-import {defineConfig} from 'umi'
+import { defineConfig } from 'umi'
 
 export default defineConfig({
   history: {
@@ -9,13 +9,11 @@ export default defineConfig({
   },
   mountElementId: '',
   routes: [
-    {path: '/', component: './index'},
+    { path: '/', component: './index' },
     {
       path: '/user',
       component: './index',
-      routes: [
-        {path: 'detail', component: './index'},
-      ],
+      routes: [{ path: 'detail', component: './index' }],
     },
   ],
 })

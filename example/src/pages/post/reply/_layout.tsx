@@ -3,7 +3,7 @@ import { usePageParams } from 'umi'
 
 export interface Params {
   /** 回复 ID */
-  replyId: number,
+  replyId: number
 }
 
 const Layout: React.FC = props => {

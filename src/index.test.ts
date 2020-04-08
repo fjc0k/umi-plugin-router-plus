@@ -19,5 +19,9 @@ test('normal', async () => {
   })
   const umiTmp = join(cwd, '.umi-test')
   expect(existsSync(join(umiTmp, PLUGIN_ID, 'exports.ts'))).toBeTruthy()
-  expect(readFileSync(join(umiTmp, 'core', 'umiExports.ts'), 'utf8').includes(`export * from '../${PLUGIN_ID}/exports'`)).toBeTruthy()
+  expect(
+    readFileSync(join(umiTmp, 'core', 'umiExports.ts'), 'utf8').includes(
+      `export * from '../${PLUGIN_ID}/exports'`,
+    ),
+  ).toBeTruthy()
 })

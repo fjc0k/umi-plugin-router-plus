@@ -1,8 +1,8 @@
 import { utils } from 'umi'
 
 interface IBaseRoute<T> {
-  path?: string,
-  routes?: T[],
+  path?: string
+  routes?: T[]
 }
 
 /**
@@ -12,10 +12,7 @@ interface IBaseRoute<T> {
  */
 export function flattenRoutes<T extends IBaseRoute<T>>(routes: T[]): T[] {
   return utils.lodash.flatten(
-    routes.map(route => [
-      route,
-      ...flattenRoutes(route.routes || []),
-    ]),
+    routes.map(route => [route, ...flattenRoutes(route.routes || [])]),
   )
 }
 
@@ -25,11 +22,19 @@ export function flattenRoutes<T extends IBaseRoute<T>>(routes: T[]): T[] {
  * @param routes 路由表
  * @param cb 回调
  */
-export function walkRoutes<T extends IBaseRoute<T>, X>(routes: T[], cb: (route: T, parent: T | undefined) => X, parent?: T): X[] {
+export function walkRoutes<T extends IBaseRoute<T>, X>(
+  routes: T[],
+  cb: (route: T, parent: T | undefined) => X,
+  parent?: T,
+): X[] {
   return routes.map(route => {
     const currentRoute = { ...route }
     if (!utils.lodash.isEmpty(currentRoute.routes)) {
-      currentRoute.routes = walkRoutes(currentRoute.routes!, cb, currentRoute) as any
+      currentRoute.routes = walkRoutes(
+        currentRoute.routes!,
+        cb,
+        currentRoute,
+      ) as any
     }
     return cb(currentRoute, parent)
   })
@@ -46,8 +51,12 @@ export function walkRoutes<T extends IBaseRoute<T>, X>(routes: T[], cb: (route: 
  * @param route 路由信息
  */
 export function getRouteName(route: IBaseRoute<any>): string {
-  const originalName = (route.path || /* istanbul ignore next */ '').replace(/\.html?$/i, '')
-  const baseName = utils.lodash.upperFirst(utils.lodash.camelCase(originalName)) || 'Index'
+  const originalName = (route.path || /* istanbul ignore next */ '').replace(
+    /\.html?$/i,
+    '',
+  )
+  const baseName =
+    utils.lodash.upperFirst(utils.lodash.camelCase(originalName)) || 'Index'
   const suffix = utils.lodash.isEmpty(route.routes) ? '' : 'Layout'
   const routeName = `${baseName}${suffix}`
   return routeName

@@ -65,10 +65,16 @@ export function makeExports(syntheticRoutes: ISyntheticRoute[]): string {
 
 
     // =============== 页面自身参数 ===============
-    ${syntheticRoutes.map(route => dedent`
-      // @ts-ignore
-      import { Params as ${route.pageOwnParamsTypesName} } from ${JSON.stringify(route.component)}
-    `).join('\n')}
+    ${syntheticRoutes
+      .map(
+        route => dedent`
+          // @ts-ignore
+          import { Params as ${
+            route.pageOwnParamsTypesName
+          } } from ${JSON.stringify(route.component)}
+        `,
+      )
+      .join('\n')}
 
 
     // =============== 页面名称 -> 页面参数 ===============
@@ -78,9 +84,13 @@ export function makeExports(syntheticRoutes: ISyntheticRoute[]): string {
      * 页面自身参数指页面自身定义的参数，不包括从 layout 继承的参数。
      */
     export interface IPageNameToPageOwnParams {
-      ${syntheticRoutes.map(route => dedent`
-        ${route.pageName}: IfAny<${route.pageOwnParamsTypesName}, never, ${route.pageOwnParamsTypesName}>,
-      `).join('\n')}
+      ${syntheticRoutes
+        .map(
+          route => dedent`
+            ${route.pageName}: IfAny<${route.pageOwnParamsTypesName}, never, ${route.pageOwnParamsTypesName}>,
+          `,
+        )
+        .join('\n')}
     }
 
     /**
@@ -89,13 +99,17 @@ export function makeExports(syntheticRoutes: ISyntheticRoute[]): string {
      * 页面参数包括页面自身定义的参数，还包括从 layout 继承的参数。
      */
     export interface IPageNameToPageParams {
-      ${syntheticRoutes.map(route => dedent`
-        ${route.pageName}: ${
-          !route.parentPageName
-            ? `IPageNameToPageOwnParams['${route.pageName}']`
-            : `Merge<IPageNameToPageParams['${route.parentPageName}'], IPageNameToPageOwnParams['${route.pageName}']>`
-        },
-      `).join('\n')}
+      ${syntheticRoutes
+        .map(
+          route => dedent`
+            ${route.pageName}: ${
+            !route.parentPageName
+              ? `IPageNameToPageOwnParams['${route.pageName}']`
+              : `Merge<IPageNameToPageParams['${route.parentPageName}'], IPageNameToPageOwnParams['${route.pageName}']>`
+          },
+          `,
+        )
+        .join('\n')}
     }
 
 
@@ -104,9 +118,13 @@ export function makeExports(syntheticRoutes: ISyntheticRoute[]): string {
      * 页面名称到页面路径的映射。
      */
     export const pageNameToPagePath = {
-      ${syntheticRoutes.map(route => dedent`
-        ${route.pageName}: ${JSON.stringify(route.path)},
-      `).join('\n')}
+      ${syntheticRoutes
+        .map(
+          route => dedent`
+            ${route.pageName}: ${JSON.stringify(route.path)},
+          `,
+        )
+        .join('\n')}
     }
 
 
@@ -211,10 +229,17 @@ export function makeExports(syntheticRoutes: ISyntheticRoute[]): string {
     /**
      * 获取传给页面的 query。
      */
-    export function useQuery<T extends Record<string, string> = Record<string, string>>(): T {
+    export function usePageQuery<T extends Record<string, string> = Record<string, string>>(): T {
       // @ts-ignore
       const { query } = useLocation()
       return query
     }
+
+    /**
+     * 获取传给页面的 query。
+     *
+     * @deprecated 使用 usePageQuery 代替
+     */
+    export const useQuery = usePageQuery
   `
 }

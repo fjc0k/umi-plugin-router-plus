@@ -9,14 +9,13 @@
     "esModuleInterop": true,
     "importHelpers": true,
     "allowSyntheticDefaultImports": true,
+    "preserveSymlinks": true,
     "newLine": "LF",
     "jsx": "react",
     "skipLibCheck": true,
     "sourceMap": false,
     "baseUrl": ".",
     "outDir": "./lib",
-    "lib": [
-      "esnext"
-    ]
+    "lib": ["esnext"]
   }
 }

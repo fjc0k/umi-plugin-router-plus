@@ -61,33 +61,29 @@ describe('flattenRoutes', () => {
 describe('walkRoutes', () => {
   test('表现正常', () => {
     const _routes = utils.lodash.cloneDeep(routes)
-    expect(walkRoutes(_routes, (route, parent) => {
-      return {
-        ...route,
-        __walk: true,
-        __parent: parent && parent.path,
-      }
-    })).toMatchSnapshot('遍历路由表')
+    expect(
+      walkRoutes(_routes, (route, parent) => {
+        return {
+          ...route,
+          __walk: true,
+          __parent: parent && parent.path,
+        }
+      }),
+    ).toMatchSnapshot('遍历路由表')
   })
 })
 
 describe('getRouteName', () => {
   test('应去除 path 中的 .html 后缀', () => {
-    expect(
-      getRouteName({ path: 'isPath.html' }),
-    ).toMatch('IsPath')
+    expect(getRouteName({ path: 'isPath.html' })).toMatch('IsPath')
   })
   test('包含子路由时加上 Layout 后缀', () => {
-    expect(
-      getRouteName({ path: 'isPath.html', routes: []}),
-    ).toMatch('IsPath')
-    expect(
-      getRouteName({ path: 'isPath.html', routes: [{}]}),
-    ).toMatch('IsPathLayout')
+    expect(getRouteName({ path: 'isPath.html', routes: [] })).toMatch('IsPath')
+    expect(getRouteName({ path: 'isPath.html', routes: [{}] })).toMatch(
+      'IsPathLayout',
+    )
   })
   test('基本名称为空时应将之设为 Index', () => {
-    expect(
-      getRouteName({ path: '/' }),
-    ).toMatch('Index')
+    expect(getRouteName({ path: '/' })).toMatch('Index')
   })
 })

@@ -21,5 +21,5 @@ export default function User() {
 
 export interface Params {
   /** ID */
-  id: number,
+  id: number
 }

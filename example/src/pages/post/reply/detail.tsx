@@ -4,6 +4,8 @@ import { usePageParams } from 'umi'
 export default function () {
   const { id, replyId } = usePageParams('PostReplyDetail')
   return (
-    <div>post#{id}, reply#{replyId} detail</div>
+    <div>
+      post#{id}, reply#{replyId} detail
+    </div>
   )
 }

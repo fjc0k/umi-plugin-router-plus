@@ -1,9 +1,15 @@
 import React from 'react'
-import { navigateBack, navigateForward, navigateTo, redirectTo, useQuery } from 'umi'
+import {
+  navigateBack,
+  navigateForward,
+  navigateTo,
+  redirectTo,
+  useQuery,
+} from 'umi'
 
 export default function () {
   const { name } = useQuery<{
-    name: string,
+    name: string
   }>()
   console.log(name)
 

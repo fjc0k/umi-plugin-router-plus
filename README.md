@@ -2,7 +2,7 @@
 
 一款 [Umi 3](https://github.com/umijs/umi) 插件，为你带来**类型友好**的**页面参数的定义、传递与获取**。
 
-----
+---
 
 <!-- TOC depthFrom:2 -->
 
@@ -18,6 +18,7 @@
   - [navigateBack(delta)](#navigatebackdelta)
   - [navigateForward(delta)](#navigateforwarddelta)
   - [usePageParams(pageName)](#usepageparamspagename)
+  - [usePageQuery()](#usepagequery)
   - [useQuery()](#usequery)
 - [页面名称](#页面名称)
 - [许可](#许可)
@@ -27,11 +28,14 @@
 ## 安装
 
 ```bash
-# yarn
-yarn add umi-plugin-router-plus -D
-
 # npm
 npm i umi-plugin-router-plus -D
+
+# or yarn
+yarn add umi-plugin-router-plus -D
+
+# or pnpm
+pnpm add umi-plugin-router-plus -D
 ```
 
 ## 启用方式
@@ -48,11 +52,11 @@ npm i umi-plugin-router-plus -D
 // src/pages/test.tsx
 
 export interface Params {
-  id: number,
-  enabled?: boolean,
-  gender: 'male' | 'female',
-  name: string,
-  tags?: string[],
+  id: number
+  enabled?: boolean
+  gender: 'male' | 'female'
+  name: string
+  tags?: string[]
 }
 ```
 
@@ -66,11 +70,11 @@ import React from 'react'
 import { usePageParams } from 'umi'
 
 export interface Params {
-  id: number,
-  enabled?: boolean,
-  gender: 'male' | 'female',
-  name: string,
-  tags?: string[],
+  id: number
+  enabled?: boolean
+  gender: 'male' | 'female'
+  name: string
+  tags?: string[]
 }
 
 export default function () {
@@ -82,9 +86,7 @@ export default function () {
     tags = [],
   } = usePageParams('Test')
 
-  return (
-    <div>id is: {id}</div>
-  )
+  return <div>id is: {id}</div>
 }
 ```
 
@@ -146,19 +148,23 @@ import { usePageParams } from 'umi'
 const { id } = usePageParams('User')
 ```
 
-获取传给页面的参数。
+获取传给页面的参数，**会继承所有父 layout 页面定义的参数**。
 
-### useQuery()
+### usePageQuery()
 
 ```ts
-import { useQuery } from 'umi'
+import { usePageQuery } from 'umi'
 
-const { source } = useQuery<{
-  source: string,
+const { source } = usePageQuery<{
+  source: string
 }>()
 ```
 
 获取传给页面的 query。
+
+### useQuery()
+
+同 `usePageQuery`，不再推荐使用，未来版本会被移除。
 
 ## 页面名称
 
