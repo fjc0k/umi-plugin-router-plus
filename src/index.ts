@@ -16,6 +16,20 @@ export default function (api: IApi) {
       ISyntheticRoute['pageName'],
       ISyntheticRoute['path']
     >()
+    walkRoutes(routes, (route, parentRoute) => {
+      if (route.path === '/') {
+        const dupeRouteIndexes: number[] = []
+        parentRoute?.routes?.forEach((route, index) => {
+          if (route.path && /^\/index(\.html)?$/i.test(route.path)) {
+            dupeRouteIndexes.push(index)
+          }
+        })
+        dupeRouteIndexes.sort((a, b) => b - a)
+        for (const i of dupeRouteIndexes) {
+          parentRoute!.routes!.splice(i, 1)
+        }
+      }
+    })
     const syntheticRoutes = walkRoutes(routes, (route, parentRoute) => {
       const routeName = getRouteName(route)
       /* istanbul ignore if */
