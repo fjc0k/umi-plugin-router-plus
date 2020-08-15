@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.4.1](https://github.com/fjc0k/umi-plugin-router-plus/compare/v1.4.0...v1.4.1) (2020-08-15)
+
+### Bug Fixes
+
+- 解决开启 exportStatic 时 index 重复的问题 ([95077ac](https://github.com/fjc0k/umi-plugin-router-plus/commit/95077ac5ea0e95c7b0d8a0845e678fdbb75b7641))
+
 ## [1.4.0](https://github.com/fjc0k/umi-plugin-router-plus/compare/v1.3.0...v1.4.0) (2020-04-08)
 
 ### Features
