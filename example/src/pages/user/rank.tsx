@@ -1,10 +1,15 @@
 import React from 'react'
-import { usePageParams } from 'umi'
+import { usePageName, usePageParams } from 'umi'
 
 export default function () {
+  const pageName = usePageName()
   const { gender = 'male' } = usePageParams('UserRank')
 
-  return <div>{gender} rank</div>
+  return (
+    <div>
+      {pageName}: {gender} rank
+    </div>
+  )
 }
 
 export interface Params {

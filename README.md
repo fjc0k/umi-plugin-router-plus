@@ -17,6 +17,7 @@
   - [redirectTo(pageName, params)](#redirecttopagename-params)
   - [navigateBack(delta)](#navigatebackdelta)
   - [navigateForward(delta)](#navigateforwarddelta)
+  - [usePageName()](#usepagename)
   - [usePageParams(pageName)](#usepageparamspagename)
   - [usePageQuery()](#usepagequery)
   - [useQuery()](#usequery)
@@ -139,6 +140,16 @@ navigateForward(2)
 ```
 
 保留当前页面，前进到下一页面或多级页面，和 `history.goForward` 效果一致。
+
+### usePageName()
+
+```ts
+import { usePageName } from 'umi'
+
+const pageName = usePageName()
+```
+
+获取当前页面的名称。
 
 ### usePageParams(pageName)
 

@@ -127,6 +127,20 @@ export function makeExports(syntheticRoutes: ISyntheticRoute[]): string {
         .join('\n')}
     }
 
+    // =============== 页面路径 -> 页面名称 ===============
+    /**
+     * 页面路径到页面名称的映射。
+     */
+    export const pagePathToPageName = {
+      ${syntheticRoutes
+        .map(
+          route => dedent`
+            ${JSON.stringify(route.path)}: ${JSON.stringify(route.pageName)},
+          `,
+        )
+        .join('\n')}
+    }
+
 
     // =============== 路由辅助函数 ===============
     /**
@@ -241,5 +255,14 @@ export function makeExports(syntheticRoutes: ISyntheticRoute[]): string {
      * @deprecated 使用 usePageQuery 代替
      */
     export const useQuery = usePageQuery
+
+    /**
+     * 获取当前页面名称。
+     */
+    export function usePageName(): INormalPageName {
+      // @ts-ignore
+      const { pathname } = useLocation()
+      return pagePathToPageName[pathname]
+    }
   `
 }
