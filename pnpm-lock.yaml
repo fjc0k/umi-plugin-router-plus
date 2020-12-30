@@ -19,7 +19,7 @@ devDependencies:
   tsc-watch: registry.npm.taobao.org/tsc-watch/4.2.9_typescript@3.9.7
   typescript: registry.npm.taobao.org/typescript/3.9.7
   umi: registry.npm.taobao.org/umi/3.2.15
-lockfileVersion: 5.1
+lockfileVersion: 5.2
 packages:
   registry.npm.taobao.org/@ahooksjs/use-request/2.5.0:
     dependencies:
@@ -2112,7 +2112,7 @@ packages:
       jest-haste-map: registry.npm.taobao.org/jest-haste-map/25.5.1
       jest-message-util: registry.npm.taobao.org/jest-message-util/25.5.0
       jest-regex-util: registry.npm.taobao.org/jest-regex-util/25.2.6
-      jest-resolve: registry.npm.taobao.org/jest-resolve/25.5.1_jest-resolve@25.5.1
+      jest-resolve: registry.npm.taobao.org/jest-resolve/25.5.1
       jest-resolve-dependencies: registry.npm.taobao.org/jest-resolve-dependencies/25.5.4
       jest-runner: registry.npm.taobao.org/jest-runner/25.5.4
       jest-runtime: registry.npm.taobao.org/jest-runtime/25.5.4
@@ -2226,7 +2226,7 @@ packages:
       istanbul-lib-source-maps: registry.npm.taobao.org/istanbul-lib-source-maps/4.0.0
       istanbul-reports: registry.npm.taobao.org/istanbul-reports/3.0.2
       jest-haste-map: registry.npm.taobao.org/jest-haste-map/25.5.1
-      jest-resolve: registry.npm.taobao.org/jest-resolve/25.5.1_jest-resolve@25.5.1
+      jest-resolve: registry.npm.taobao.org/jest-resolve/25.5.1
       jest-util: registry.npm.taobao.org/jest-util/25.5.0
       jest-worker: registry.npm.taobao.org/jest-worker/25.5.0
       slash: registry.npm.taobao.org/slash/3.0.0
@@ -3614,6 +3614,7 @@ packages:
       functional-red-black-tree: registry.npm.taobao.org/functional-red-black-tree/1.0.1
       regexpp: registry.npm.taobao.org/regexpp/3.1.0
       tsutils: registry.npm.taobao.org/tsutils/3.17.1_typescript@3.9.7
+      typescript: registry.npm.taobao.org/typescript/3.9.7
     dev: true
     engines:
       node: ^8.10.0 || ^10.13.0 || >=11.10.1
@@ -3623,6 +3624,9 @@ packages:
       '@typescript-eslint/parser': ^2.0.0
       eslint: ^5.0.0 || ^6.0.0
       typescript: '*'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
     resolution:
       integrity: sha1-b4zopGx96kpvHRcdK7j7rm2sK+k=
       registry: 'https://r.npm.taobao.org/'
@@ -3692,6 +3696,7 @@ packages:
       '@typescript-eslint/typescript-estree': registry.npm.taobao.org/@typescript-eslint/typescript-estree/2.34.0_typescript@3.9.7
       eslint: registry.npm.taobao.org/eslint/6.8.0
       eslint-visitor-keys: registry.npm.taobao.org/eslint-visitor-keys/1.3.0
+      typescript: registry.npm.taobao.org/typescript/3.9.7
     dev: true
     engines:
       node: ^8.10.0 || ^10.13.0 || >=11.10.1
@@ -3700,6 +3705,9 @@ packages:
     peerDependencies:
       eslint: ^5.0.0 || ^6.0.0
       typescript: '*'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
     resolution:
       integrity: sha1-UCUmMMoxloVCDpo5ygX+GFola8g=
       registry: 'https://r.npm.taobao.org/'
@@ -3729,6 +3737,7 @@ packages:
       lodash: registry.npm.taobao.org/lodash/4.17.20
       semver: registry.npm.taobao.org/semver/7.3.2
       tsutils: registry.npm.taobao.org/tsutils/3.17.1_typescript@3.9.7
+      typescript: registry.npm.taobao.org/typescript/3.9.7
     dev: true
     engines:
       node: ^8.10.0 || ^10.13.0 || >=11.10.1
@@ -3736,6 +3745,9 @@ packages:
     name: '@typescript-eslint/typescript-estree'
     peerDependencies:
       typescript: '*'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
     resolution:
       integrity: sha1-FK62NTs57wcyzH8bgoUpSTfPN9U=
       registry: 'https://r.npm.taobao.org/'
@@ -3879,7 +3891,7 @@ packages:
       strip-ansi: registry.npm.taobao.org/strip-ansi/6.0.0
       style-loader: registry.npm.taobao.org/style-loader/1.2.1_webpack@4.44.1
       url-loader: registry.npm.taobao.org/url-loader/4.1.0_file-loader@6.0.0+webpack@4.44.1
-      webpack: registry.npm.taobao.org/webpack/4.44.1_webpack@4.44.1
+      webpack: registry.npm.taobao.org/webpack/4.44.1
       webpack-chain: registry.npm.taobao.org/webpack-chain/6.5.1
       webpack-dev-middleware: registry.npm.taobao.org/webpack-dev-middleware/3.7.2_webpack@4.44.1
       webpack-manifest-plugin: registry.npm.taobao.org/webpack-manifest-plugin/2.2.0_webpack@4.44.1
@@ -4127,7 +4139,7 @@ packages:
       tty-browserify: registry.npm.taobao.org/tty-browserify/0.0.1
       umi: registry.npm.taobao.org/umi/3.2.15
       url: registry.npm.taobao.org/url/0.11.0
-      webpack: registry.npm.taobao.org/webpack/5.0.0-beta.12_webpack@5.0.0-beta.12
+      webpack: registry.npm.taobao.org/webpack/5.0.0-beta.12
     dev: true
     id: registry.npm.taobao.org/@umijs/plugin-webpack-5/0.1.3
     name: '@umijs/plugin-webpack-5'
@@ -5713,7 +5725,7 @@ packages:
       mkdirp: registry.npm.taobao.org/mkdirp/0.5.5
       pify: registry.npm.taobao.org/pify/4.0.1
       schema-utils: registry.npm.taobao.org/schema-utils/2.7.0
-      webpack: registry.npm.taobao.org/webpack/4.44.1_webpack@4.44.1
+      webpack: registry.npm.taobao.org/webpack/4.44.1
     dev: true
     engines:
       node: '>= 6.9'
@@ -7613,7 +7625,7 @@ packages:
       p-limit: registry.npm.taobao.org/p-limit/2.3.0
       schema-utils: registry.npm.taobao.org/schema-utils/1.0.0
       serialize-javascript: registry.npm.taobao.org/serialize-javascript/2.1.2
-      webpack: registry.npm.taobao.org/webpack/4.44.1_webpack@4.44.1
+      webpack: registry.npm.taobao.org/webpack/4.44.1
       webpack-log: registry.npm.taobao.org/webpack-log/2.0.0
     dev: true
     engines:
@@ -7915,7 +7927,7 @@ packages:
       postcss-value-parser: registry.npm.taobao.org/postcss-value-parser/4.1.0
       schema-utils: registry.npm.taobao.org/schema-utils/2.7.0
       semver: registry.npm.taobao.org/semver/6.3.0
-      webpack: registry.npm.taobao.org/webpack/4.44.1_webpack@4.44.1
+      webpack: registry.npm.taobao.org/webpack/4.44.1
     dev: true
     engines:
       node: '>= 8.9.0'
@@ -10075,7 +10087,7 @@ packages:
     dependencies:
       loader-utils: registry.npm.taobao.org/loader-utils/2.0.0
       schema-utils: registry.npm.taobao.org/schema-utils/2.7.0
-      webpack: registry.npm.taobao.org/webpack/4.44.1_webpack@4.44.1
+      webpack: registry.npm.taobao.org/webpack/4.44.1
     dev: true
     engines:
       node: '>= 10.13.0'
@@ -10439,7 +10451,7 @@ packages:
       chalk: registry.npm.taobao.org/chalk/1.1.3
       error-stack-parser: registry.npm.taobao.org/error-stack-parser/2.0.6
       string-width: registry.npm.taobao.org/string-width/2.1.1
-      webpack: registry.npm.taobao.org/webpack/4.44.1_webpack@4.44.1
+      webpack: registry.npm.taobao.org/webpack/4.44.1
     dev: true
     id: registry.npm.taobao.org/friendly-errors-webpack-plugin/1.7.0
     name: friendly-errors-webpack-plugin
@@ -10561,6 +10573,8 @@ packages:
       node: '>= 4.0'
     name: fsevents
     optional: true
+    os:
+      - darwin
     requiresBuild: true
     resolution:
       integrity: sha1-8yXLBFVZJCi88Rs4M3DvcOO/zDg=
@@ -10573,6 +10587,8 @@ packages:
       node: ^8.16.0 || ^10.6.0 || >=11.0.0
     name: fsevents
     optional: true
+    os:
+      - darwin
     resolution:
       integrity: sha1-+3OHA66NL5/pAMM4Nt3r7ouX8j4=
       registry: 'https://r.npm.taobao.org/'
@@ -12734,7 +12750,7 @@ packages:
       jest-get-type: registry.npm.taobao.org/jest-get-type/25.2.6
       jest-jasmine2: registry.npm.taobao.org/jest-jasmine2/25.5.4
       jest-regex-util: registry.npm.taobao.org/jest-regex-util/25.2.6
-      jest-resolve: registry.npm.taobao.org/jest-resolve/25.5.1_jest-resolve@25.5.1
+      jest-resolve: registry.npm.taobao.org/jest-resolve/25.5.1
       jest-util: registry.npm.taobao.org/jest-util/25.5.0
       jest-validate: registry.npm.taobao.org/jest-validate/25.5.0
       micromatch: registry.npm.taobao.org/micromatch/4.0.2
@@ -13092,7 +13108,7 @@ packages:
     version: 25.5.0
   registry.npm.taobao.org/jest-pnp-resolver/1.2.2_jest-resolve@25.5.1:
     dependencies:
-      jest-resolve: registry.npm.taobao.org/jest-resolve/25.5.1_jest-resolve@25.5.1
+      jest-resolve: registry.npm.taobao.org/jest-resolve/25.5.1
     dev: true
     engines:
       node: '>=6'
@@ -13100,6 +13116,9 @@ packages:
     name: jest-pnp-resolver
     peerDependencies:
       jest-resolve: '*'
+    peerDependenciesMeta:
+      jest-resolve:
+        optional: true
     resolution:
       integrity: sha1-twSsCuAoqJEIpNBAs/kZ393I4zw=
       registry: 'https://r.npm.taobao.org/'
@@ -13139,7 +13158,7 @@ packages:
       registry: 'https://r.npm.taobao.org/'
       tarball: 'https://registry.npm.taobao.org/jest-resolve-dependencies/download/jest-resolve-dependencies-25.5.4.tgz'
     version: 25.5.4
-  registry.npm.taobao.org/jest-resolve/25.5.1_jest-resolve@25.5.1:
+  registry.npm.taobao.org/jest-resolve/25.5.1:
     dependencies:
       '@jest/types': registry.npm.taobao.org/@jest/types/25.5.0
       browser-resolve: registry.npm.taobao.org/browser-resolve/1.11.3
@@ -13153,10 +13172,7 @@ packages:
     dev: true
     engines:
       node: '>= 8.3'
-    id: registry.npm.taobao.org/jest-resolve/25.5.1
     name: jest-resolve
-    peerDependencies:
-      jest-resolve: '*'
     resolution:
       integrity: sha1-Dm+8+nwm0qX+j0VgiNwzKnkmaCk=
       registry: 'https://r.npm.taobao.org/'
@@ -13177,7 +13193,7 @@ packages:
       jest-jasmine2: registry.npm.taobao.org/jest-jasmine2/25.5.4
       jest-leak-detector: registry.npm.taobao.org/jest-leak-detector/25.5.0
       jest-message-util: registry.npm.taobao.org/jest-message-util/25.5.0
-      jest-resolve: registry.npm.taobao.org/jest-resolve/25.5.1_jest-resolve@25.5.1
+      jest-resolve: registry.npm.taobao.org/jest-resolve/25.5.1
       jest-runtime: registry.npm.taobao.org/jest-runtime/25.5.4
       jest-util: registry.npm.taobao.org/jest-util/25.5.0
       jest-worker: registry.npm.taobao.org/jest-worker/25.5.0
@@ -13212,7 +13228,7 @@ packages:
       jest-message-util: registry.npm.taobao.org/jest-message-util/25.5.0
       jest-mock: registry.npm.taobao.org/jest-mock/25.5.0
       jest-regex-util: registry.npm.taobao.org/jest-regex-util/25.2.6
-      jest-resolve: registry.npm.taobao.org/jest-resolve/25.5.1_jest-resolve@25.5.1
+      jest-resolve: registry.npm.taobao.org/jest-resolve/25.5.1
       jest-snapshot: registry.npm.taobao.org/jest-snapshot/25.5.1
       jest-util: registry.npm.taobao.org/jest-util/25.5.0
       jest-validate: registry.npm.taobao.org/jest-validate/25.5.0
@@ -13282,7 +13298,7 @@ packages:
       jest-get-type: registry.npm.taobao.org/jest-get-type/25.2.6
       jest-matcher-utils: registry.npm.taobao.org/jest-matcher-utils/25.5.0
       jest-message-util: registry.npm.taobao.org/jest-message-util/25.5.0
-      jest-resolve: registry.npm.taobao.org/jest-resolve/25.5.1_jest-resolve@25.5.1
+      jest-resolve: registry.npm.taobao.org/jest-resolve/25.5.1
       make-dir: registry.npm.taobao.org/make-dir/3.1.0
       natural-compare: registry.npm.taobao.org/natural-compare/1.4.0
       pretty-format: registry.npm.taobao.org/pretty-format/25.5.0
@@ -13545,6 +13561,9 @@ packages:
     name: jsdom
     peerDependencies:
       canvas: ^2.5.0
+    peerDependenciesMeta:
+      canvas:
+        optional: true
     resolution:
       integrity: sha1-0v6xrvcYP4a+UhuMaDP/UpbQfsU=
       registry: 'https://r.npm.taobao.org/'
@@ -13884,7 +13903,7 @@ packages:
       less: registry.npm.taobao.org/less/3.12.2
       loader-utils: registry.npm.taobao.org/loader-utils/1.4.0
       pify: registry.npm.taobao.org/pify/4.0.1
-      webpack: registry.npm.taobao.org/webpack/4.44.1_webpack@4.44.1
+      webpack: registry.npm.taobao.org/webpack/4.44.1
     dev: true
     engines:
       node: '>= 4.8.0'
@@ -14935,7 +14954,7 @@ packages:
       loader-utils: registry.npm.taobao.org/loader-utils/1.4.0
       normalize-url: registry.npm.taobao.org/normalize-url/1.9.1
       schema-utils: registry.npm.taobao.org/schema-utils/1.0.0
-      webpack: registry.npm.taobao.org/webpack/4.44.1_webpack@4.44.1
+      webpack: registry.npm.taobao.org/webpack/4.44.1
       webpack-sources: registry.npm.taobao.org/webpack-sources/1.4.3
     dev: true
     engines:
@@ -14954,7 +14973,7 @@ packages:
       loader-utils: registry.npm.taobao.org/loader-utils/1.4.0
       normalize-url: registry.npm.taobao.org/normalize-url/1.9.1
       schema-utils: registry.npm.taobao.org/schema-utils/1.0.0
-      webpack: registry.npm.taobao.org/webpack/5.0.0-beta.12_webpack@5.0.0-beta.12
+      webpack: registry.npm.taobao.org/webpack/5.0.0-beta.12
       webpack-sources: registry.npm.taobao.org/webpack-sources/1.4.3
     dev: true
     engines:
@@ -15873,7 +15892,7 @@ packages:
     dependencies:
       cssnano: registry.npm.taobao.org/cssnano/4.1.10
       last-call-webpack-plugin: registry.npm.taobao.org/last-call-webpack-plugin/3.0.0
-      webpack: registry.npm.taobao.org/webpack/4.44.1_webpack@4.44.1
+      webpack: registry.npm.taobao.org/webpack/4.44.1
     dev: true
     id: registry.npm.taobao.org/optimize-css-assets-webpack-plugin/5.0.3
     name: optimize-css-assets-webpack-plugin
@@ -18057,7 +18076,7 @@ packages:
     dependencies:
       loader-utils: registry.npm.taobao.org/loader-utils/2.0.0
       schema-utils: registry.npm.taobao.org/schema-utils/2.7.0
-      webpack: registry.npm.taobao.org/webpack/4.44.1_webpack@4.44.1
+      webpack: registry.npm.taobao.org/webpack/4.44.1
     dev: true
     engines:
       node: '>= 10.13.0'
@@ -18091,6 +18110,25 @@ packages:
       rc-util: registry.npm.taobao.org/rc-util/5.0.7
       resize-observer-polyfill: registry.npm.taobao.org/resize-observer-polyfill/1.5.1
     dev: true
+    name: rc-align
+    peerDependencies:
+      react: '*'
+      react-dom: '*'
+    resolution:
+      integrity: sha1-BWbeFBqC2aGSO3ZyxwvbGdzebiM=
+      registry: 'https://r.npm.taobao.org/'
+      tarball: 'https://registry.npm.taobao.org/rc-align/download/rc-align-4.0.1.tgz'
+    version: 4.0.1
+  registry.npm.taobao.org/rc-align/4.0.1_react@16.13.1:
+    dependencies:
+      '@babel/runtime': registry.npm.taobao.org/@babel/runtime/7.11.2
+      classnames: registry.npm.taobao.org/classnames/2.2.6
+      dom-align: registry.npm.taobao.org/dom-align/1.12.0
+      rc-util: registry.npm.taobao.org/rc-util/5.0.7
+      react: registry.npm.taobao.org/react/16.13.1
+      resize-observer-polyfill: registry.npm.taobao.org/resize-observer-polyfill/1.5.1
+    dev: true
+    id: registry.npm.taobao.org/rc-align/4.0.1
     name: rc-align
     peerDependencies:
       react: '*'
@@ -18322,6 +18360,24 @@ packages:
       registry: 'https://r.npm.taobao.org/'
       tarball: 'https://registry.npm.taobao.org/rc-motion/download/rc-motion-1.0.2.tgz'
     version: 1.0.2
+  registry.npm.taobao.org/rc-motion/1.0.2_react@16.13.1:
+    dependencies:
+      '@babel/runtime': registry.npm.taobao.org/@babel/runtime/7.11.2
+      classnames: registry.npm.taobao.org/classnames/2.2.6
+      raf: registry.npm.taobao.org/raf/3.4.1
+      rc-util: registry.npm.taobao.org/rc-util/5.0.7
+      react: registry.npm.taobao.org/react/16.13.1
+    dev: true
+    id: registry.npm.taobao.org/rc-motion/1.0.2
+    name: rc-motion
+    peerDependencies:
+      react: ^16.0.0
+      react-dom: ^16.0.0
+    resolution:
+      integrity: sha1-uK7CiGQimNdN3JrBdz4bYAqqHCU=
+      registry: 'https://r.npm.taobao.org/'
+      tarball: 'https://registry.npm.taobao.org/rc-motion/download/rc-motion-1.0.2.tgz'
+    version: 1.0.2
   registry.npm.taobao.org/rc-notification/4.4.0:
     dependencies:
       '@babel/runtime': registry.npm.taobao.org/@babel/runtime/7.11.2
@@ -18361,7 +18417,7 @@ packages:
       date-fns: registry.npm.taobao.org/date-fns/2.15.0
       dayjs: registry.npm.taobao.org/dayjs/1.8.33
       moment: registry.npm.taobao.org/moment/2.27.0
-      rc-trigger: registry.npm.taobao.org/rc-trigger/4.4.0
+      rc-trigger: registry.npm.taobao.org/rc-trigger/4.4.0_react@16.13.1
       rc-util: registry.npm.taobao.org/rc-util/5.0.7
       react: registry.npm.taobao.org/react/16.13.1
       shallowequal: registry.npm.taobao.org/shallowequal/1.1.0
@@ -18682,6 +18738,26 @@ packages:
       registry: 'https://r.npm.taobao.org/'
       tarball: 'https://registry.npm.taobao.org/rc-trigger/download/rc-trigger-4.4.0.tgz'
     version: 4.4.0
+  registry.npm.taobao.org/rc-trigger/4.4.0_react@16.13.1:
+    dependencies:
+      '@babel/runtime': registry.npm.taobao.org/@babel/runtime/7.11.2
+      classnames: registry.npm.taobao.org/classnames/2.2.6
+      raf: registry.npm.taobao.org/raf/3.4.1
+      rc-align: registry.npm.taobao.org/rc-align/4.0.1_react@16.13.1
+      rc-motion: registry.npm.taobao.org/rc-motion/1.0.2_react@16.13.1
+      rc-util: registry.npm.taobao.org/rc-util/5.0.7
+    dev: true
+    engines:
+      node: '>=8.x'
+    id: registry.npm.taobao.org/rc-trigger/4.4.0
+    name: rc-trigger
+    peerDependencies:
+      react: '*'
+    resolution:
+      integrity: sha1-Ur5Fx7QDJ7KX66z/hNac6ShWBrw=
+      registry: 'https://r.npm.taobao.org/'
+      tarball: 'https://registry.npm.taobao.org/rc-trigger/download/rc-trigger-4.4.0.tgz'
+    version: 4.4.0
   registry.npm.taobao.org/rc-upload/3.2.0:
     dependencies:
       classnames: registry.npm.taobao.org/classnames/2.2.6
@@ -18865,7 +18941,14 @@ packages:
     name: react-redux
     peerDependencies:
       react: ^16.8.3
+      react-dom: '*'
+      react-native: '*'
       redux: ^2.0.0 || ^3.0.0 || ^4.0.0-0
+    peerDependenciesMeta:
+      react-dom:
+        optional: true
+      react-native:
+        optional: true
     resolution:
       integrity: sha1-je33hJAQFNsv7KGrYzhk3uaK2YU=
       registry: 'https://r.npm.taobao.org/'
@@ -20827,7 +20910,7 @@ packages:
   registry.npm.taobao.org/speed-measure-webpack-plugin/1.3.3_webpack@4.44.1:
     dependencies:
       chalk: registry.npm.taobao.org/chalk/2.4.2
-      webpack: registry.npm.taobao.org/webpack/4.44.1_webpack@4.44.1
+      webpack: registry.npm.taobao.org/webpack/4.44.1
     dev: true
     engines:
       node: '>=6.0.0'
@@ -21468,7 +21551,7 @@ packages:
     dependencies:
       loader-utils: registry.npm.taobao.org/loader-utils/2.0.0
       schema-utils: registry.npm.taobao.org/schema-utils/2.7.0
-      webpack: registry.npm.taobao.org/webpack/4.44.1_webpack@4.44.1
+      webpack: registry.npm.taobao.org/webpack/4.44.1
     dev: true
     engines:
       node: '>= 8.9.0'
@@ -21676,7 +21759,7 @@ packages:
       serialize-javascript: registry.npm.taobao.org/serialize-javascript/4.0.0
       source-map: registry.npm.taobao.org/source-map/0.6.1
       terser: registry.npm.taobao.org/terser/4.8.0
-      webpack: registry.npm.taobao.org/webpack/4.44.1_webpack@4.44.1
+      webpack: registry.npm.taobao.org/webpack/4.44.1
       webpack-sources: registry.npm.taobao.org/webpack-sources/1.4.3
       worker-farm: registry.npm.taobao.org/worker-farm/1.7.0
     dev: true
@@ -21701,7 +21784,7 @@ packages:
       serialize-javascript: registry.npm.taobao.org/serialize-javascript/4.0.0
       source-map: registry.npm.taobao.org/source-map/0.6.1
       terser: registry.npm.taobao.org/terser/4.8.0
-      webpack: registry.npm.taobao.org/webpack/5.0.0-beta.12_webpack@5.0.0-beta.12
+      webpack: registry.npm.taobao.org/webpack/5.0.0-beta.12
       webpack-sources: registry.npm.taobao.org/webpack-sources/1.4.3
     dev: true
     engines:
@@ -22585,7 +22668,7 @@ packages:
       loader-utils: registry.npm.taobao.org/loader-utils/2.0.0
       mime-types: registry.npm.taobao.org/mime-types/2.1.27
       schema-utils: registry.npm.taobao.org/schema-utils/2.7.0
-      webpack: registry.npm.taobao.org/webpack/4.44.1_webpack@4.44.1
+      webpack: registry.npm.taobao.org/webpack/4.44.1
     dev: true
     engines:
       node: '>= 10.13.0'
@@ -22594,6 +22677,9 @@ packages:
     peerDependencies:
       file-loader: '*'
       webpack: ^4.0.0 || ^5.0.0
+    peerDependenciesMeta:
+      file-loader:
+        optional: true
     resolution:
       integrity: sha1-x9aw1rD8zVGrP/xYp40yuNiae+I=
       registry: 'https://r.npm.taobao.org/'
@@ -22942,7 +23028,7 @@ packages:
       mime: registry.npm.taobao.org/mime/2.4.6
       mkdirp: registry.npm.taobao.org/mkdirp/0.5.5
       range-parser: registry.npm.taobao.org/range-parser/1.2.1
-      webpack: registry.npm.taobao.org/webpack/4.44.1_webpack@4.44.1
+      webpack: registry.npm.taobao.org/webpack/4.44.1
       webpack-log: registry.npm.taobao.org/webpack-log/2.0.0
     dev: true
     engines:
@@ -22975,7 +23061,7 @@ packages:
       lodash: registry.npm.taobao.org/lodash/4.17.20
       object.entries: registry.npm.taobao.org/object.entries/1.1.2
       tapable: registry.npm.taobao.org/tapable/1.1.3
-      webpack: registry.npm.taobao.org/webpack/4.44.1_webpack@4.44.1
+      webpack: registry.npm.taobao.org/webpack/4.44.1
     dev: true
     engines:
       node: '>=6.11.5'
@@ -23012,7 +23098,7 @@ packages:
       registry: 'https://r.npm.taobao.org/'
       tarball: 'https://registry.npm.taobao.org/webpack-sources/download/webpack-sources-2.0.0-beta.8.tgz'
     version: 2.0.0-beta.8
-  registry.npm.taobao.org/webpack/4.44.1_webpack@4.44.1:
+  registry.npm.taobao.org/webpack/4.44.1:
     dependencies:
       '@webassemblyjs/ast': registry.npm.taobao.org/@webassemblyjs/ast/1.9.0
       '@webassemblyjs/helper-module-context': registry.npm.taobao.org/@webassemblyjs/helper-module-context/1.9.0
@@ -23041,16 +23127,21 @@ packages:
     engines:
       node: '>=6.11.5'
     hasBin: true
-    id: registry.npm.taobao.org/webpack/4.44.1
     name: webpack
     peerDependencies:
-      webpack: '*'
+      webpack-cli: '*'
+      webpack-command: '*'
+    peerDependenciesMeta:
+      webpack-cli:
+        optional: true
+      webpack-command:
+        optional: true
     resolution:
       integrity: sha1-F+af/58yG48RfR/acU7fwLk5zCE=
       registry: 'https://r.npm.taobao.org/'
       tarball: 'https://registry.npm.taobao.org/webpack/download/webpack-4.44.1.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fwebpack%2Fdownload%2Fwebpack-4.44.1.tgz'
     version: 4.44.1
-  registry.npm.taobao.org/webpack/5.0.0-beta.12_webpack@5.0.0-beta.12:
+  registry.npm.taobao.org/webpack/5.0.0-beta.12:
     dependencies:
       '@webassemblyjs/ast': registry.npm.taobao.org/@webassemblyjs/ast/1.8.5
       '@webassemblyjs/helper-module-context': registry.npm.taobao.org/@webassemblyjs/helper-module-context/1.8.5
@@ -23078,10 +23169,7 @@ packages:
     engines:
       node: '>=10.13.0'
     hasBin: true
-    id: registry.npm.taobao.org/webpack/5.0.0-beta.12
     name: webpack
-    peerDependencies:
-      webpack: '*'
     resolution:
       integrity: sha1-NlGg+mua2XO5YIMFYBwIuEwktAI=
       registry: 'https://r.npm.taobao.org/'
@@ -23096,7 +23184,7 @@ packages:
       pretty-time: registry.npm.taobao.org/pretty-time/1.1.0
       std-env: registry.npm.taobao.org/std-env/2.2.1
       text-table: registry.npm.taobao.org/text-table/0.2.0
-      webpack: registry.npm.taobao.org/webpack/4.44.1_webpack@4.44.1
+      webpack: registry.npm.taobao.org/webpack/4.44.1
       wrap-ansi: registry.npm.taobao.org/wrap-ansi/6.2.0
     dev: true
     engines:
@@ -23329,6 +23417,11 @@ packages:
     peerDependencies:
       bufferutil: ^4.0.1
       utf-8-validate: ^5.0.2
+    peerDependenciesMeta:
+      bufferutil:
+        optional: true
+      utf-8-validate:
+        optional: true
     resolution:
       integrity: sha1-0FR79n985PEqct/jEmLGjX3FUcg=
       registry: 'https://r.npm.taobao.org/'

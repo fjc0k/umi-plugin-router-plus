@@ -52,7 +52,7 @@ export function walkRoutes<T extends IBaseRoute<T>, X>(
  */
 export function getRouteName(route: IBaseRoute<any>): string {
   const originalName = (route.path || /* istanbul ignore next */ '').replace(
-    /\.html?$/i,
+    /(\.html?|\(\.html?\)\?)$/i,
     '',
   )
   const baseName =
