@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.5.1](https://github.com/fjc0k/umi-plugin-router-plus/compare/v1.5.0...v1.5.1) (2020-12-30)
+
+### Bug Fixes
+
+- 获取路由名称时去除尾部 .html ([82d9b75](https://github.com/fjc0k/umi-plugin-router-plus/commit/82d9b7528d11cf1ea336b6d5c2be6f9cde1ff494))
+
 ## [1.5.0](https://github.com/fjc0k/umi-plugin-router-plus/compare/v1.4.1...v1.5.0) (2020-10-11)
 
 ### Features
