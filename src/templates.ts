@@ -3,6 +3,9 @@ import { ISyntheticRoute } from './types'
 
 export function makeExports(syntheticRoutes: ISyntheticRoute[]): string {
   return dedent`
+    /* eslint-disable */
+    // @ts-nocheck
+
     import { useMemo } from 'react'
     import { history, useLocation } from 'umi'
 
@@ -63,6 +66,33 @@ export function makeExports(syntheticRoutes: ISyntheticRoute[]): string {
      */
     export type IPageName = INormalPageName | ILayoutPageName
 
+    /**
+     * 普通页面的名称列表。
+     */
+    export const normalPageNames: INormalPageName[] = [
+      ${syntheticRoutes
+        .filter(route => !route.isLayout)
+        .map(route => `'${route.pageName}',`)
+        .join('\n')}
+    ]
+
+    /**
+     * layout 页面的名称列表。
+     */
+    export const layoutPageNames: ILayoutPageName[] = [
+      ${syntheticRoutes
+        .filter(route => route.isLayout)
+        .map(route => `'${route.pageName}',`)
+        .join('\n')}
+    ]
+
+    /**
+     * 页面的名称列表。
+     */
+    export const pageNames: IPageName[] = [
+      ${syntheticRoutes.map(route => `'${route.pageName}',`).join('\n')}
+    ]
+
 
     // =============== 页面自身参数 ===============
     ${syntheticRoutes
@@ -117,7 +147,7 @@ export function makeExports(syntheticRoutes: ISyntheticRoute[]): string {
     /**
      * 页面名称到页面路径的映射。
      */
-    export const pageNameToPagePath = {
+    export const pageNameToPagePath: Record<IPageName, string> = {
       ${syntheticRoutes
         .map(
           route => dedent`
@@ -131,7 +161,7 @@ export function makeExports(syntheticRoutes: ISyntheticRoute[]): string {
     /**
      * 页面路径到页面名称的映射。
      */
-    export const pagePathToPageName = {
+    export const pagePathToPageName: Record<string, IPageName> = {
       ${syntheticRoutes
         .map(
           route => dedent`
