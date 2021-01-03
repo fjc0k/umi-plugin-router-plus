@@ -1,13 +1,23 @@
-import { dedent } from 'vtils'
+import { dedent, TreeData } from 'vtils'
+import { flattenRoutes } from './utils'
 import { ISyntheticRoute } from './types'
 
 export function makeExports(syntheticRoutes: ISyntheticRoute[]): string {
+  const flatSyntheticRoutes = flattenRoutes(syntheticRoutes).filter(
+    route => !!route.component,
+  )
+  const pageNamesTree = new TreeData(syntheticRoutes, {
+    childrenPropName: 'routes',
+  })
+    .pickNodeProps(['pageName', 'routes'])
+    .export()
   return dedent`
     /* eslint-disable */
     // @ts-nocheck
 
     import { useMemo } from 'react'
     import { history, useLocation } from 'umi'
+    import { TreeData } from 'vtils'
 
 
     // =============== 辅助类型 ===============
@@ -45,7 +55,7 @@ export function makeExports(syntheticRoutes: ISyntheticRoute[]): string {
      * 普通页面的名称，即不是 layout 的页面。
      */
     export type INormalPageName = ${
-      syntheticRoutes
+      flatSyntheticRoutes
         .filter(route => !route.isLayout)
         .map(route => `'${route.pageName}'`)
         .join(' | ') || /* istanbul ignore next */ 'never'
@@ -55,7 +65,7 @@ export function makeExports(syntheticRoutes: ISyntheticRoute[]): string {
      * layout 页面的名称。
      */
     export type ILayoutPageName = ${
-      syntheticRoutes
+      flatSyntheticRoutes
         .filter(route => route.isLayout)
         .map(route => `'${route.pageName}'`)
         .join(' | ') || /* istanbul ignore next */ 'never'
@@ -70,7 +80,7 @@ export function makeExports(syntheticRoutes: ISyntheticRoute[]): string {
      * 普通页面的名称列表。
      */
     export const normalPageNames: INormalPageName[] = [
-      ${syntheticRoutes
+      ${flatSyntheticRoutes
         .filter(route => !route.isLayout)
         .map(route => `'${route.pageName}',`)
         .join('\n')}
@@ -80,7 +90,7 @@ export function makeExports(syntheticRoutes: ISyntheticRoute[]): string {
      * layout 页面的名称列表。
      */
     export const layoutPageNames: ILayoutPageName[] = [
-      ${syntheticRoutes
+      ${flatSyntheticRoutes
         .filter(route => route.isLayout)
         .map(route => `'${route.pageName}',`)
         .join('\n')}
@@ -90,12 +100,16 @@ export function makeExports(syntheticRoutes: ISyntheticRoute[]): string {
      * 页面的名称列表。
      */
     export const pageNames: IPageName[] = [
-      ${syntheticRoutes.map(route => `'${route.pageName}',`).join('\n')}
+      ${flatSyntheticRoutes.map(route => `'${route.pageName}',`).join('\n')}
     ]
+
+    const pageNamesTree = new TreeData(${JSON.stringify(pageNamesTree)}, {
+      childrenPropName: 'routes',
+    })
 
 
     // =============== 页面自身参数 ===============
-    ${syntheticRoutes
+    ${flatSyntheticRoutes
       .map(
         route => dedent`
           // @ts-ignore
@@ -114,7 +128,7 @@ export function makeExports(syntheticRoutes: ISyntheticRoute[]): string {
      * 页面自身参数指页面自身定义的参数，不包括从 layout 继承的参数。
      */
     export interface IPageNameToPageOwnParams {
-      ${syntheticRoutes
+      ${flatSyntheticRoutes
         .map(
           route => dedent`
             ${route.pageName}: IfAny<${route.pageOwnParamsTypesName}, never, ${route.pageOwnParamsTypesName}>,
@@ -129,7 +143,7 @@ export function makeExports(syntheticRoutes: ISyntheticRoute[]): string {
      * 页面参数包括页面自身定义的参数，还包括从 layout 继承的参数。
      */
     export interface IPageNameToPageParams {
-      ${syntheticRoutes
+      ${flatSyntheticRoutes
         .map(
           route => dedent`
             ${route.pageName}: ${
@@ -148,7 +162,7 @@ export function makeExports(syntheticRoutes: ISyntheticRoute[]): string {
      * 页面名称到页面路径的映射。
      */
     export const pageNameToPagePath: Record<IPageName, string> = {
-      ${syntheticRoutes
+      ${flatSyntheticRoutes
         .map(
           route => dedent`
             ${route.pageName}: ${JSON.stringify(route.path)},
@@ -162,13 +176,36 @@ export function makeExports(syntheticRoutes: ISyntheticRoute[]): string {
      * 页面路径到页面名称的映射。
      */
     export const pagePathToPageName: Record<string, IPageName> = {
-      ${syntheticRoutes
+      ${flatSyntheticRoutes
         .map(
           route => dedent`
             ${JSON.stringify(route.path)}: ${JSON.stringify(route.pageName)},
           `,
         )
         .join('\n')}
+    }
+
+
+    /**
+     * 获取给定页面的子页面名称列表。
+     * 
+     * @param pageName 给定的页面名称
+     */
+    export function getChildrenPageNames(pageName: IPageName): IPageName[] {
+      const childrenPageNames: IPageName[] = []
+      let pageNameDepth: number = -1
+      pageNamesTree.traverseDFS(_ => {
+        if (_.node.pageName === pageName) {
+          pageNameDepth = _.depth
+        } else if (pageNameDepth !== -1) {
+          if (_.depth <= pageNameDepth) {
+            _.exit()
+          } else {
+            childrenPageNames.push(_.node.pageName as any)
+          }
+        }
+      })
+      return childrenPageNames
     }
 
 

@@ -1,11 +1,17 @@
 import React from 'react'
 import {
+  getChildrenPageNames,
   navigateBack,
   navigateForward,
   navigateTo,
+  pageNames,
   redirectTo,
   useQuery,
 } from 'umi'
+
+console.log(
+  Object.fromEntries(pageNames.map(name => [name, getChildrenPageNames(name)])),
+)
 
 export default function () {
   const { name } = useQuery<{

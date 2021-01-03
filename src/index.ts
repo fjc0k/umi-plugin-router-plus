@@ -1,4 +1,4 @@
-import { flattenRoutes, getRouteName, walkRoutes } from './utils'
+import { getRouteName, walkRoutes } from './utils'
 import { IApi, utils } from 'umi'
 import { ISyntheticRoute } from './types'
 import { makeExports } from './templates'
@@ -52,12 +52,9 @@ export default function (api: IApi) {
         isLayout: !utils.lodash.isEmpty(route.routes),
       } as ISyntheticRoute
     })
-    const flatSyntheticRoutes = flattenRoutes(syntheticRoutes).filter(
-      route => !!route.component,
-    )
     api.writeTmpFile({
       path: `${PLUGIN_ID}/exports.ts`,
-      content: makeExports(flatSyntheticRoutes),
+      content: makeExports(syntheticRoutes),
     })
   })
 

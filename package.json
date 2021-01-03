@@ -65,7 +65,7 @@
     ]
   },
   "dependencies": {
-    "vtils": "^2.57.0"
+    "vtils": "^4.14.1"
   },
   "devDependencies": {
     "@types/jest": "^25.1.4",
