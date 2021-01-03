@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.8.0](https://github.com/fjc0k/umi-plugin-router-plus/compare/v1.7.0...v1.8.0) (2021-01-03)
+
+### Features
+
+- pageNameToChildrenPageNames ([9dcb668](https://github.com/fjc0k/umi-plugin-router-plus/commit/9dcb66808b24e84b1e3063c03805df7a3dc04282))
+
 ## [1.7.0](https://github.com/fjc0k/umi-plugin-router-plus/compare/v1.6.0...v1.7.0) (2021-01-03)
 
 ### Features
