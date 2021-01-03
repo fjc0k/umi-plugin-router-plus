@@ -1,6 +1,6 @@
 {
   "name": "umi-plugin-router-plus",
-  "version": "1.6.0",
+  "version": "1.7.0",
   "description": "一款 Umi 3 插件，为你带来类型友好的页面参数的定义、传递与获取。",
   "keywords": [
     "umi",
