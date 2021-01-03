@@ -8,16 +8,32 @@ export function makeExports(syntheticRoutes: ISyntheticRoute[]): string {
   )
   const pageNamesTree = new TreeData(syntheticRoutes, {
     childrenPropName: 'routes',
-  })
-    .pickNodeProps(['pageName', 'routes'])
-    .export()
+  }).pickNodeProps(['pageName', 'routes'])
+  const pageNameToChildrenPageNames = flatSyntheticRoutes.reduce<
+    Record<string, string[]>
+  >((res, item) => {
+    const childrenPageNames: string[] = []
+    let pageNameDepth = -1
+    pageNamesTree.traverseDFS(_ => {
+      if (_.node.pageName === item.pageName) {
+        pageNameDepth = _.depth
+      } else if (pageNameDepth !== -1) {
+        if (_.depth <= pageNameDepth) {
+          _.exit()
+        } else {
+          childrenPageNames.push(_.node.pageName)
+        }
+      }
+    })
+    res[item.pageName] = childrenPageNames
+    return res
+  }, {})
   return dedent`
     /* eslint-disable */
     // @ts-nocheck
 
     import { useMemo } from 'react'
     import { history, useLocation } from 'umi'
-    import { TreeData } from 'vtils'
 
 
     // =============== 辅助类型 ===============
@@ -103,10 +119,6 @@ export function makeExports(syntheticRoutes: ISyntheticRoute[]): string {
       ${flatSyntheticRoutes.map(route => `'${route.pageName}',`).join('\n')}
     ]
 
-    const pageNamesTree = new TreeData(${JSON.stringify(pageNamesTree)}, {
-      childrenPropName: 'routes',
-    })
-
 
     // =============== 页面自身参数 ===============
     ${flatSyntheticRoutes
@@ -185,28 +197,13 @@ export function makeExports(syntheticRoutes: ISyntheticRoute[]): string {
         .join('\n')}
     }
 
-
+    // =============== 页面名称 -> 子页面名称列表 ===============
     /**
-     * 获取给定页面的子页面名称列表。
-     * 
-     * @param pageName 给定的页面名称
+     * 页面名称到子页面名称列表的映射。
      */
-    export function getChildrenPageNames(pageName: IPageName): IPageName[] {
-      const childrenPageNames: IPageName[] = []
-      let pageNameDepth: number = -1
-      pageNamesTree.traverseDFS(_ => {
-        if (_.node.pageName === pageName) {
-          pageNameDepth = _.depth
-        } else if (pageNameDepth !== -1) {
-          if (_.depth <= pageNameDepth) {
-            _.exit()
-          } else {
-            childrenPageNames.push(_.node.pageName as any)
-          }
-        }
-      })
-      return childrenPageNames
-    }
+    export const pageNameToChildrenPageNames: Record<IPageName, IPageName[]> = ${JSON.stringify(
+      pageNameToChildrenPageNames,
+    )}
 
 
     // =============== 路由辅助函数 ===============
