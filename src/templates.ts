@@ -286,10 +286,15 @@ export function makeExports(syntheticRoutes: ISyntheticRoute[]): string {
     // =============== Hooks ===============
     /**
      * 获取传给页面的参数。
+     */
+    export function usePageParams(): Record<string, any>
+    /**
+     * 获取传给页面的参数。
      *
      * @param pageName 当前页面的名称
      */
-    export function usePageParams<TPageName extends IPageName>(pageName: TPageName): IPageNameToPageParams[TPageName] {
+    export function usePageParams<TPageName extends IPageName>(pageName: TPageName): IPageNameToPageParams[TPageName]
+    export function usePageParams<TPageName extends IPageName>(pageName?: TPageName): IPageNameToPageParams[TPageName] {
       // @ts-ignore
       const { query } = useLocation()
       const params = useMemo(
