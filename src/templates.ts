@@ -127,7 +127,7 @@ export function makeExports(syntheticRoutes: ISyntheticRoute[]): string {
           // @ts-ignore
           import { Params as ${
             route.pageOwnParamsTypesName
-          } } from ${JSON.stringify(route.component)}
+          } } from ${JSON.stringify(route.component!.replace(/\.tsx?$/, ''))}
         `,
       )
       .join('\n')}
